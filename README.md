@@ -8,7 +8,7 @@ Paper DOI: [10.5281/zenodo.19046582](https://doi.org/10.5281/zenodo.19046582)
 
 ## Verification Notebook
 
-`LD_verification.sage` — 82 independent checks of all numerical claims in the paper.
+`LD_verification.sage` — 87 independent checks of all numerical claims in the paper.
 
 **Usage:**
 
@@ -24,7 +24,7 @@ Result: 10 predictions, RMS = 1.49%, all within 3%.
 
 ## Output
 
-    82 PASSED / 0 FAILED / 82 TOTAL
+    87 PASSED / 0 FAILED / 87 TOTAL
     *** ALL CHECKS PASSED ***
 
 ## Interactive Dashboard
