@@ -1,5 +1,5 @@
 # LD PROOF COMPANION
-# Version: post-S106 (2026-03-21)
+# Version: post-S116 (2026-03-22, coherence map + commutator theorem + 3 status patches)
 # Author: Denis D. Zinchenko
 # Assembled by: Claude (from session logs S42–S100, paper v5.5, context files)
 # Purpose: Self-contained reference for all LD theorems, derivations, observations
@@ -46,6 +46,75 @@ Dual markers (e.g. **[THM-arith / CONJ]**): the numerical content is [THM], the 
 
 ---
 
+# O. MONODROMY — SINGLE SOURCE OF TRUTH
+
+## [THM-comb] O.1: Unique Monodromy of X₀(6) Dessin
+Source: S112
+Status: [THM-comb] (exhaustive search: 1/480 candidates)
+Dependencies: C.1 (dessin structure), F.7 (face triples)
+Verified: Python (MCT 12/12, |Mon|=72, spectrum=I.6, face triples=F.7)
+
+### Statement
+
+The monodromy triple of the X₀(6) dessin, with particle labels fixed by F.7 face triples, is **unique**:
+
+```
+σ∞ = (c u b s d t)(e τ μ)(W H)(p)     type (6,3,2,1)
+σ₁ = (u t)(c p)(b μ)(d e)(s W)(τ H)   type (2⁶)
+σ₀ = (c u p)(b t e)(s μ H)(d W τ)     type (3⁴)
+```
+
+### Verification (MCT = Monodromy Closure Test)
+
+σ₁·σ₀·σ∞ = id verified for all 12 edges:
+c→u→p→c ✓, u→b→t→u ✓, p→p→c→p ✓, b→s→μ→b ✓, t→c→u→t ✓, e→τ→d→e ✓,
+s→d→W→s ✓, μ→e→b→μ ✓, H→W→τ→H ✓, d→t→e→d ✓, W→H→s→W ✓, τ→μ→H→τ ✓.
+
+### σ₀-orbits (BV labels)
+
+| BV | σ₀-orbit | Label | Composition | Σn | Σℓ |
+|----|----------|-------|-------------|:--:|:--:|
+| BV₀ | (c → u → p) | **anchor** | 2Q + A | 9 = d₂² | 6 = N |
+| BV₁ | (b → t → e) | **index** | 2Q + 1L | 12 = index | 13 = d₁²+d₂² |
+| BV₂ | (s → μ → H) | **star** | 1Q + 1L + 1B | 12 = index | 11 = dim M₁₀ |
+| BV₃ | (d → W → τ) | **other** | 1Q + 1B + 1L | 11 = dim M₁₀ | 16 = d₁⁴ |
+
+### σ₁-pairs (WV labels)
+
+| WV | σ₁-pair | BV—BV | Role | n+n' |
+|----|---------|-------|------|:----:|
+| A | {u, t} | anc—idx | **Bridge** (FORCED in all spanning trees) | 8 = d₁³ |
+| B | {c, p} | anc—anc | **Multi-edge** (one per spanning tree) | 8 = d₁³ |
+| C | {b, μ} | idx—star | Interior | 8 = d₁³ |
+| D | {d, e} | idx—oth | Interior (contains √2 anomaly) | 1 |
+| E | {s, W} | star—oth | **Far-end** (competing pair) | 9 = d₂² |
+| F | {τ, H} | star—oth | **Far-end** (competing pair) | 10 = |B₁| |
+
+### Key derived quantities
+
+| Quantity | Definition | Value |
+|----------|-----------|-------|
+| anchor | unique σ∞-fixed point | **p** |
+| pre_anchor | σ₀⁻¹(anchor) | **u** |
+| σ₁(anchor) | | **c** |
+| T³(σ₁(anchor)) | half-rotation of c in 6-cycle | **s** → BV_star = BV₂ |
+| Aut(G) | undirected Cayley graph automorphisms | **⟨(c↔p)⟩**, |Aut| = 2 |
+
+### Proof of uniqueness
+
+480 candidates = 240 σ∞-orderings of the 6-cycle × 2 options for the ambiguous lepton-quark pair. Requirements: (a) σ₁·σ₀·σ∞ = id; (b) σ₀ cycle type (3,3,3,3); (c) F.7 face-triple consistency (12/12). Exactly 1 candidate survives. [S112]
+
+### Automorphism proof
+
+Only c and p have non-distinct neighbor multisets: nbrs(c) = {u, p, p}, nbrs(p) = {c, c, u}. All other 10 vertices have 3 distinct neighbors. The swap (c↔p) preserves all adjacencies. |Aut(G)| = 2. Undirected operator rank = 11 (not 12).
+
+### RULE: MCT (Monodromy Closure Test)
+
+Any companion section using σ₁-partner NAMES (not just Fσ₁) must cite §O.1 and be verifiable against the permutations above. Fσ₁ (face size of partner) is preferred over partner names when possible (immune to label errors).
+
+
+---
+
 # A. FOUNDATION: N = 6 AND (d₁, d₂) = (2, 3)
 
 ## [THM] A.1: Uniqueness of N = 6 (three filters)
@@ -76,6 +145,26 @@ index = 12, #cusps = 4, genus = 0, ν₂ = ν₃ = 0, widths = {1,2,3,6}
 Paper §4, Theorems 4.2–4.6.
 
 
+### [THM-analytic] A.1a: Bootstrap invariant — ring selects N=6 with 10⁴³ separation (S107)
+
+Define B(N) := ι(N)·δ(N)/π · cos²(1/(Nπ)), M(N) := N·π^{N−1}, F(N) := B(N)²·ln B(N)/M(N), where ι = index, δ = ∏_{d|N} d. Physical target: ξ := ½ ln(C₀/G_N) = 50.33. The ring equation G(N) = G_Newton is equivalent to F(N) = ξ, with amplification lg(G/G_N) = (2ξ/ln 10)·(1 − F/ξ), A = 43.72.
+
+**Uniqueness.** For all N ∈ ℤ₊: |F(N)/ξ − 1| < 0.023 ⟺ N = 6. Proof: finite check N=2..500, asymptotic bound N≥30 via τ(N)=O(N^ε) (Hardy-Wright Thm 315). F(6)/ξ = 1.0012; nearest competitor N=24 with F/ξ=1.207 (gap 177×, corresponding to 10⁹ in G).
+
+| N | B(N) | M(N) | F/ξ | lg(G/G_obs) |
+|---|------|------|-----|-------------|
+| 5 | 9.51 | 487 | 0.008 | +43.4 |
+| **6** | **137.12** | **1836** | **1.001** | **−0.05** |
+| 7 | 17.79 | 6730 | 0.003 | +43.6 |
+| 24 | 5.07M | 6.5T | 1.207 | −9.1 |
+
+**Family comparison.** Among {Γ₀, Γ₁, Γ, Γ₀⁺}: only Γ₀(N) has a bootstrap fixed point. Γ(N) fails: all cusp widths = N, ∏w ~ exp(N²·ln N) overwhelms M ~ exp(N·ln π). Γ₀(N)+: index/2^{ω(N)} too small (B=34.3 at N=6). Γ₁(6) = Γ₀(6) trivially (φ(6)=2). [THM-computational, S107]
+
+**Scope.** ABD applies ONLY to level selection. Internal scan: signs, BVP, loop dimension, PMNS, IR coefficients, c_n series — none benefit from ring amplification.
+
+**Caveat.** The amplification identity is algebraically exact but tautological: F(N)=ξ restates G(N)=G_N in log-form. The value lies in the uniqueness scan, not in the identity itself. Ring convergence is by Newton's method, NOT Banach contraction (see H.3a, X.15).
+
+
 ## [THM] A.2: (p−1)(q−1) = 2
 Source: Paper §4, Thm 4.4
 
@@ -83,8 +172,8 @@ Source: Paper §4, Thm 4.4
 Factor 2 = 1·2 with p−1 ≥ 1: p = 2, q = 3. Both prime. ∎
 
 
-## [OBS/DER] A.3: ≥30 paths to (d₁, d₂) = (2, 3)
-Source: Compiled S73 §11, updated S99–S106
+## [OBS/DER] A.3: ≥31 paths to (d₁, d₂) = (2, 3)
+Source: Compiled S73 §11, updated S99–S116
 
 | # | Test | Status |
 |---|------|--------|
@@ -119,6 +208,7 @@ Source: Compiled S73 §11, updated S99–S106
 | 28 | j(i)+N factorization: j/N+1 = (index+d₁+d₂)² iff d₁=2 | [THM] |
 | 29 | 137 = index·Σ(1/K): factors as d₁·(d₁−2)·(...) = 0 | [THM] |
 | 30 | |d₁−d₂| = 1 iff d₁=2 (lemma from Catalan, not independent) | [THM] |
+| 31 | d₁+(N−1)² = d₂³ (commutator mixing formula, I.29) | [THM-arith] |
 
 No other pair survives more than 4 tests.
 
@@ -134,7 +224,7 @@ Not all 30 paths are fully independent. They cluster into ~8 groups sharing comm
 | **Physical data** | 13, 14, 19 | Empirical masses or CKM |
 | **Sporadic groups** | 21 | Monster representation theory |
 | **Automorphic (scattering)** | 22 | Scattering matrix of Γ₀(6) |
-| **Effective Laplacian** | 23, 24, 25, 26 | Schur complement / Cayley graph |
+| **Effective Laplacian** | 23, 24, 25, 26, 31 | Schur complement / Cayley graph |
 
 Within each cluster, paths share assumptions and could fail together. Between clusters, failure modes are independent. Conservative count: **~8 independent lines of evidence**, not 30.
 
@@ -355,9 +445,9 @@ Source: S73 §1.1
 #{internal σ₁-pairs} = #{fixed points of σ∞}. For (6,3,2,1): m=1.
 
 ### Proof
-**Forward:** x fixed by σ∞ ⟹ σ₀(σ₁(x))=x ⟹ σ₁(x)=σ₀⁻¹(x) ∈ same σ₀-orbit.
+**Forward:** x fixed by σ∞ ⟹ σ₀⁻¹(σ₁(x))=x ⟹ σ₁(x)=σ₀(x) ∈ same σ₀-orbit.
 
-**Reverse:** {x,y} internal, y=σ₁(x)=σ₀⁻¹(x) ⟹ σ∞(x)=σ₀(σ₁(x))=σ₀(σ₀⁻¹(x))=x.
+**Reverse:** {x,y} internal, y=σ₁(x)=σ₀(x) ⟹ σ∞(x)=σ₀⁻¹(σ₁(x))=σ₀⁻¹(σ₀(x))=x.
 
 **Injectivity:** Is partner y also fixed? σ∞(y)=σ₀(σ₁(y))=σ₀(x)≠y (σ₀ has no fixed points). Each internal pair has exactly 1 fixed point. Bijection. ∎
 
@@ -511,7 +601,7 @@ Source: S72 §4. PDG: 0.839±0.011, δ = **+0.63σ**.
 A = cos θ₁₂(PMNS). CKM-PMNS link.
 
 ## [OBS] E.4: γ = arctan(d₂²/d₁²) = arctan(9/4) = 66.04°
-Source: S72 §5. Exp: 65.98°±4.0°, δ = **−0.015σ**.
+Source: S72 §5. Exp: (62.8 ± 2.6)° (LHCb combination, Nov 2025), δ = **−1.25σ**. Previous: 65.98°±4.0° (−0.015σ). Now max-pull CKM parameter.
 
 ## [OBS] E.5: R_b² = N/Kirchhoff = 3/20 = 0.15
 Source: S72 §6. Exp: 0.15088±0.007, δ = **+0.13σ**.
@@ -521,16 +611,16 @@ Identity: R_b² = λ·d₁/d₂ (only 3 independent parameters).
 ## [OBS] E.6: Full CKM (9 elements, Sage-verified)
 Source: S72 §7. Max deviation: |V_td| at 1.11%. J = 3.095×10⁻⁵ (**−0.12σ**).
 
-| Parameter | LD | PDG | σ-pull |
+| Parameter | LD | Exp | σ-pull |
 |-----------|-----|-----|--------|
 | λ | 9/40 | 0.22497±0.00070 | −0.04 |
 | A | 3/√13 | 0.839±0.011 | +0.63 |
-| γ | arctan(9/4) | 65.98°±4.0° | −0.015 |
+| γ | arctan(9/4) | (62.8±2.6)° (LHCb 2025) | **−1.25** |
 | R_b² | 3/20 | 0.15088±0.007 | +0.13 |
 | J | 3.095×10⁻⁵ | (3.08±0.13)×10⁻⁵ | −0.12 |
 
 ### Degree-of-freedom count
-All 4 Wolfenstein parameters are functions of (d₁, d₂) only (K = |B₁|·d₁² follows from d₁, d₂). Inputs: 2 numbers. Outputs: 4 parameters. But R_b² = λ·d₁/d₂ is a **constraint**, not an independent prediction. Effective: **3 independent predictions from 2 inputs, dof = 1**. χ²/dof = (0.04² + 0.63² + 0.015²)/1 = 0.40. Acceptable, but not "zero-parameter" in the CKM sector — it is a 2-parameter (d₁,d₂) fit to 3 independent CKM observables.
+All 4 Wolfenstein parameters are functions of (d₁, d₂) only (K = |B₁|·d₁² follows from d₁, d₂). Inputs: 2 numbers. Outputs: 4 parameters. But R_b² = λ·d₁/d₂ is a **constraint**, not an independent prediction. Effective: **3 independent predictions from 2 inputs, dof = 1**. χ²/dof = (0.04² + 0.63² + 1.25²)/1 = 1.96. Acceptable (p = 0.16), but γ now dominates. If CKMfitter indirect (66.3°) preferred over LHCb direct, pull drops to +0.1σ.
 
 ## [THM→OBS] E.7: Chain anchor → Cabibbo
 ```
@@ -552,17 +642,17 @@ Replaces: S74 [OBS with mechanism]
 | Layer | Edges | Size | Role |
 |-------|-------|------|------|
 | FORCED | {u, t} | 2 | In ALL 40 trees. Bridge WV₁ deterministic. |
-| BOUNDARY | {c⊕p} × {d⊕H} × {W⊕τ} | 3 binary choices | 8 configurations |
-| RESIDUAL | {b, eₗ, μ, s, H*, τ*} | 6 = N | Completion register |
+| BOUNDARY | {c⊕p} × {s⊕W} × {τ⊕H} | 3 binary choices | 8 configurations |
+| RESIDUAL | {b, μ, d, e, W*, s*} | 6 = N | Completion register |
 
-(*H and τ appear in both BOUNDARY and RESIDUAL; role depends on boundary configuration.)
+(*W and s appear in both BOUNDARY and RESIDUAL; role depends on boundary configuration.)
 
 **Proof that {u, t} are forced.** From BB^T uniqueness (D.2): (BB^T)₀₁ = 1, (BB^T)₀₂ = (BB^T)₀₃ = 0. BV₀ connects to the rest ONLY through WV₁. Edges BV₀–WV₁ (= u) and BV₁–WV₁ (= t) are the unique path from BV₀ to BV₁. Removing either disconnects BV₀. Therefore u ∈ T and t ∈ T for every spanning tree T. ∎
 
 **Proof of 3 competing pairs.**
 (i) Multi-edge {c, p}: both connect BV₀–WV₀. Including both creates cycle. Exactly one per tree. 2 choices.
-(ii) Far-end pair {d, H}: both incident to WV₃ (degree d₁ = 2). Including both creates cycle; excluding both disconnects WV₃. Exactly one per tree. 2 choices.
-(iii) Far-end pair {W, τ}: both incident to WV₅ (degree d₁ = 2). Same argument. 2 choices.
+(ii) Far-end pair {s, W}: both at WV_E (BV₂–BV₃, degree d₁ = 2). Including both creates cycle; excluding both disconnects WV_E. Exactly one per tree. 2 choices.
+(iii) Far-end pair {τ, H}: both at WV_F (BV₃–BV₂, degree d₁ = 2). Same argument. 2 choices.
 Total boundary configurations: 2³ = 8. ∎
 
 ### Residual completion theorem
@@ -570,8 +660,8 @@ Total boundary configurations: 2³ = 8. ∎
 **Setup.** Fix a boundary triple plus forced edges {u, t}. This fixes 5 edges covering 7 vertices. Three vertices remain: BV₃, WV₂, WV₄. Six residual edges available.
 
 **Decomposition of residual edges:**
-- INTERIOR register: {b, eₗ, μ, s} — size d₁² = 4 (edges NOT incident to any vertex saturated by boundary)
-- COMPENSATOR pair: non-chosen edges from WV₃ and WV₅ (e.g., boundary = {d, W} → compensators = {H, τ}) — size d₂ − 1 = 2
+- INTERIOR register: {b, μ, d, e} — size d₁² = 4 (edges at WV_C and WV_D, NOT incident to any far-end vertex)
+- COMPENSATOR pair: non-chosen edges from WV_E and WV_F (e.g., boundary = {s, τ} → compensators = {W, H}) — size d₂ − 1 = 2
 
 Verify: d₁² + (d₂ − 1) = 4 + 2 = 6 = N. ✓
 
@@ -579,23 +669,23 @@ Verify: d₁² + (d₂ − 1) = 4 + 2 = 6 = N. ✓
 
 **Proof.** A spanning tree on 10 vertices has 9 edges. With 5 fixed, choose 4 from 6 residual, equivalently exclude 2 from 6. Total pairs: C(6,2) = 15.
 
-**Sole constraint:** the two compensator edges share endpoint BV₃ and connect to vertices already in core. Including NEITHER disconnects BV₃. Therefore at least one compensator must be included; both cannot be excluded.
+**Sole constraint:** the two compensator edges connect BV₂ and BV₃ to vertices already in core via the boundary edges. Excluding BOTH compensators disconnects a vertex. Therefore at least one compensator must be included; both cannot be excluded.
 
 Invalid pairs = those drawn entirely from the 4-element interior register: C(d₁², 2) = C(4, 2) = 6.
 
 Valid completions: C(N, 2) − C(d₁², 2) = 15 − 6 = **9 = d₂²**. ∎
 
-Sage verification: all 15 pairs enumerated, 6 invalid = {b,eₗ}, {b,μ}, {b,s}, {eₗ,μ}, {eₗ,s}, {μ,s}. All 8 boundary triples give 9. Total: 8 × 9 = 72 tree-triple incidences; actual trees = 40. ✓
+Sage verification: all 15 pairs enumerated, 6 invalid = {b,μ}, {b,d}, {b,e}, {μ,d}, {μ,e}, {d,e} — exactly C(4,2) = 6 pairs from interior. All 8 boundary triples give 9. Total: 8 × 9 = 72 tree-triple incidences; actual trees = 40. ✓
 
 ### Ground-excitation decomposition
 
-**Ground state (1 tree):** All 4 interior edges present, no compensator. Interior code = 1111 (Hamming weight d₁²). BV₃ connects through interior path s→WV₄→μ→BV₁.
+**Ground state (1 tree):** All 4 interior edges present, no compensator. Interior code = 1111 (Hamming weight d₁²). Connectivity through interior path b→BV₁→e and d→BV₃→μ (via σ₀-orbits).
 
 **Excitations (8 trees):** Drop 1 of d₁² interior bits, include 1 of (d₂−1) compensators. Count: d₁² × (d₂−1) = 4 × 2 = 8.
 
 $$d_2^2 = 1 + d_1^2(d_2 - 1)$$
 
-Sage: interior codes for triple (c,d,W): {1111}×1, {0111,1011,1101,1110}×2 each. Total: 1 + 4·2 = 9. ✓
+Sage: interior codes for triple (c,s,τ): {1111}×1, {0111,1011,1101,1110}×2 each. Total: 1 + 4·2 = 9. ✓
 
 ### Algebraic identity
 
@@ -884,9 +974,9 @@ General: Σ = (d₁+d₂)·d₂(d₂+1)/2 − d₂(d₁+1) = 5·6 − 9 = 21 = d
 Universality: checked at (d₁,d₂) ∈ {(2,3),(3,2),(2,5),(3,5),(2,7)}. Face sums d₂L and L hold ONLY at (2,3). Factorisation 44 = d₁²·(2N−1) matches only (2,3). Status: [DER] at (2,3), identification 4·11 is [OBS].
 
 
-## [OBS] F.5: K-cipher (11/11 label-free)
+## [THM] F.5: K-cipher (11/11 label-free)
 Source: S71 §1
-Status: [OBS]
+Status: [THM] (subsumed by F.7b-K constructive derivation; was [OBS] pre-S116)
 Dependencies: C.4 (BV structure)
 Verified: Sage (11/11)
 
@@ -899,7 +989,7 @@ For the 11 rational-K particles, K = 2^{a₂} · 3^{a₃} where:
 - a₃ = 0 otherwise → K is pure power of 2
 
 **a₂ (2-adic valuation, 3 branches by sector):**
-- Quarks (a₃ = −1): a₂ = 1 + δ(e, pre_anchor). All quarks get a₂ = 1 (K = 2/3) EXCEPT pre_anchor (= charm, edge 6) which gets a₂ = 2 (K = 4/3).
+- Quarks (a₃ = −1): a₂ = 1 + δ(σ₁(e), anchor). All quarks get a₂ = 1 (K = 2/3) EXCEPT c (= σ₁(anchor), with σ₁(c) = p) which gets a₂ = 2 (K = 4/3). See §O.1.
 - Neutral (a₃ = 0): a₂ = δ(BV(σ₁(e)), BV_star). Edge gets a₂ = 1 if its S-partner's BV is BV_star, else a₂ = 0.
 - BV_star non-quark (a₃ = +1): a₂ = −2·δ(BV(σ₁(e)), BV_index). μ gets a₂ = −2 (K = 3/4); H gets a₂ = 0 (K = 3).
 
@@ -914,7 +1004,11 @@ For the 11 rational-K particles, K = 2^{a₂} · 3^{a₃} where:
 | b | Q | BV1 | −1 | 1 | 2/3 | 2/3 ✓ |
 | c | Q | BV0 | −1 | 2 | 4/3 | 4/3 ✓ |
 | p | A | BV0 | 0 | 0 | 1 | 1 ✓ |
-| e | L | BV1 | 0 | 0 | 1... |
+| e | L | BV1 | 0 | 0 | 1 | 1 ✓ |
+| τ | L | BV3 | 0 | 1 | 2 | 2 ✓ |
+| μ | L | BV2 | 1 | −2 | 3/4 | 3/4 ✓ |
+| W | B | BV3 | 0 | 1 | 2 | 2 ✓ |
+| H | B | BV2 | 1 | 0 | 3 | 3 ✓ |
 
 **Sage-verified: 11/11.** All label-free: anchor, BV_index, BV_star, pre_anchor defined purely graph-theoretically (§C.4).
 
@@ -998,7 +1092,7 @@ Let S = BV_label(σ₁(e)), F = face(e), BV = BV_label(e). For the 11 rational-K
 $$a_3(e) = -\delta(F, 6) + \delta(\text{BV}, \text{star}) \cdot (1 - \delta(F, 6))$$
 
 **2-adic valuation:**
-$$a_2(e) = \delta(S, \text{star}) + \delta(S, \text{anc}) \cdot [\delta(F, 6) + \delta(e, \text{pre\_anc})] + \delta(S, \text{idx}) \cdot [1 - d_2 \cdot \delta(\text{BV}, \text{star})] + \delta(S, \text{oth}) \cdot \delta(F, 6)$$
+$$a_2(e) = \delta(S, \text{star}) + \delta(S, \text{anc}) \cdot [\delta(F, 6) + \delta(\sigma_1(e), \text{anchor})] + \delta(S, \text{idx}) \cdot [1 - d_2 \cdot \delta(\text{BV}, \text{star})] + \delta(S, \text{oth}) \cdot \delta(F, 6)$$
 
 Then K(e) = 2^{a₂} · 3^{a₃}.
 
@@ -1008,10 +1102,10 @@ Then K(e) = 2^{a₂} · 3^{a₃}.
 a₂ = 1. K(b) = 2/3 ✓, K(W) = 2 ✓, K(τ) = 2 ✓.
 
 **Case S = anc** (edges: c, t, p).
-a₂ = δ(F,6) + δ(e, pre_anc).
-- c (F=6, pre_anc): a₂ = 1+1 = 2 → K = 4/3 ✓
-- t (F=6, not pre_anc): a₂ = 1+0 = 1 → K = 2/3 ✓
-- p (F=1): a₂ = 0+0 = 0 → K = 1 ✓
+a₂ = δ(F,6) + δ(σ₁(e), anchor).
+- c (F=6, σ₁(c)=p=anchor): a₂ = 1+1 = 2 → K = 4/3 ✓
+- t (F=6, σ₁(t)=u≠anchor): a₂ = 1+0 = 1 → K = 2/3 ✓
+- p (F=1, σ₁(p)=c≠anchor): a₂ = 0+0 = 0 → K = 1 ✓
 
 **Case S = idx** (edges: u, μ; d excluded as EWSB).
 a₂ = 1 − d₂·δ(BV, star).
@@ -1032,7 +1126,7 @@ All 11/11 match. ∎
 
 2. **The coefficient −d₂ = −3** appears uniquely for μ (BV=star within S=idx), producing K(μ) = 3/4 as the mirror of K(c) = 4/3.
 
-3. **pre_anchor term** appears in S=anc (not S=idx as in original uncorrected S84). This is natural: c = pre_anchor has σ₁(c) = p = anchor, so c ∈ S=anc.
+3. **σ₁(e)=anchor term** appears in S=anc: c is the unique edge with σ₁(c) = p = anchor. Note: c = σ₁(anchor), while pre_anchor = σ₀⁻¹(p) = u (which is in S=idx, not S=anc). See §O.1.
 
 4. **Comparison with F.5 (original cipher).** F.5 branches by face type as primary variable; F.5b branches by BV(σ₁). Both give 11/11. F.5b reveals that σ₁-partnership organizes K-values into 4 columns of 3 edges each.
 
@@ -1080,8 +1174,9 @@ F.5d uses full BV labels (16 possibilities for (BV, BV(σ₁))), while F.5a coll
 Original S84 had u↔c and s↔d swapped in BV/BV(σ₁) columns. Corrected from verified edge table.
 
 
-## [OBS] F.5e: Mirror symmetries of K
+## [THM-arith] F.5e: Mirror symmetries of K
 Source: S84
+Status: [THM-arith] (arithmetic on K values derived by F.7b-K; was [OBS] pre-S116)
 
 | Pair | Mechanism | Product |
 |------|-----------|---------|
@@ -1089,7 +1184,7 @@ Source: S84
 | K(H)·K(W) = 3 · 2 | H(star,oth) ↔ W(oth,star): BV↔BV(σ₁) swap | N = 6 |
 | K(τ)·K(e) = 2 · 1 | τ(oth,star) ↔ e(idx,oth): gen 3↔1 leptonic | d₁ = 2 |
 
-The c-μ mirror (product = 1) connects S=anc (c) with S=idx (μ). The coefficient −d₂ creating K(μ)=3/4 is the exact inverse of the pre_anchor +1 creating K(c)=4/3: both are anchor-proximity effects amplified by d₂.
+The c-μ mirror (product = 1) connects S=anc (c) with S=idx (μ). The coefficient −d₂ creating K(μ)=3/4 is the exact inverse of the σ₁(c)=anchor +1 creating K(c)=4/3: both are anchor-proximity effects amplified by d₂.
 
 
 ## Updated K-cipher derivation chain
@@ -1376,9 +1471,9 @@ OUTPUT: Complete particle identity (n, K) from pure cusp arithmetic
 ```
 
 
-## [OBS] F.8: BV-level sums
+## [THM-arith/OBS] F.8: BV-level sums
 Source: S87
-Status: [OBS]
+Status: [THM-arith/OBS] (Σn from F.3 [THM]; Σℓ partial — bosons need SM_QN; was [OBS] pre-S116)
 
 | BV | Edges | Σℓ | = | Σn | = |
 |----|-------|:---:|:-:|:---:|:-:|
@@ -1802,7 +1897,7 @@ Verified: Numerical (cuspal positions); structural parallel qualitative
 
 ## [DER] H.1: The α formula
 Source: Paper §5.4 (Form A replaces paper v5.5; see H.1d for Form B death)
-Status: BULK [DER via QTC, §N], IR [DER conditional on Σ=−χ, S103]
+Status: BULK [DER via QTC, §N], IR [DER conditional on weight=level, S103+S108]
 Dependencies: A.1, N.1–N.5
 Verified: Python 42/42 (S106), mpmath 50 digits (S102)
 
@@ -1841,18 +1936,24 @@ Full 12-step chain in §N. Summary:
 
 Two standard physics inputs: perturbativity (steps 2,4), Born interpretation (step 9). Both universal QM, not LD-specific. 42/42 numerical checks pass (S106).
 
-### H.1c: IR derivation [DER conditional, S103 chain]
+### H.1c: IR derivation [DER conditional, S103+S108 chain]
 
 Form A: IR = (π/36) · (j(i)+N)/(j(i)+L) = (π/36) · 1734/1735.
 
 5-step chain:
 (1) Path A → genus 0 → X₀(6) = ℙ¹ [THM].
 (2) ℙ¹ → Cauchy kernel = unique propagator [THM].
-(3) O(N) on ℙ¹: χ(O(N)) = L = 7 by Riemann-Roch [THM]. Self-energy Σ = −χ = −L [MOT: requires action principle].
+(3) Self-energy Σ = −χ(O(N)) = −L [DER conditional on weight=level, S108]:
+  (3a) Hodge bundle ω on ℙ¹ = X₀(6) has deg(ω) = index/12 = 1 [THM].
+  (3b) ω^⊗N = O(N). Sections = M_N(Γ₀(6)), dim = N+1 = L = 7 [THM: Riemann-Roch].
+  (3c) O(N) is UNIQUE line bundle on ℙ¹ with χ = L: n+1 = L has unique solution n = N [THM].
+  (3d) Action S[φ] = ∫_{ℙ¹} |∂̄φ|² ω_FS, unique gauge-invariant second-order action [DER].
+  (3e) 1-loop: Σ = −[a₂ in heat kernel of ∂̄*∂̄ on O(N)] = −ind(∂̄) = −χ(O(N)) = −L [DER: index theorem].
+  Sign: QFT convention G⁻¹_dressed = G⁻¹_bare − Σ = j − (−L) = j + L.
 (4) Fricke W_N: tadpole shift = N [THM].
 (5) Dyson resummation: G_dressed = (j+N)/(j+L) [DER from 1–4].
 
-**Critical gap:** Step (3) identification Σ = −χ is [MOTIVATED], not [THM]. Riemann-Roch gives χ(O(N))=L. But interpreting χ as self-energy requires a Lagrangian where O(N) acts as propagator mass term. Without action principle, this step is an ansatz.
+**Remaining caveat:** The identification "field lives in O(N)" is equivalent to "weight = level." Self-referential but unique: O(N) is the only line bundle on ℙ¹ with χ = L, and O(N) = ω^⊗N = weight-N modular forms. Weaker than full Gap 3 resolution, but stronger than the former [MOT] ansatz. Status: [DER conditional on weight=level].
 
 Factorizations: j(i)+N = 1734 = N·17² = N·(index+d₁+d₂)² [THM, S102, 28th path]. j(i)+L = 1735 = 5·347 (347 prime, no LD structure).
 
@@ -1897,11 +1998,15 @@ Corollary: E₂*(τ)=0 ∧ j(τ)≠0 → τ=i (unique on X₀(6)). This REPLACES
 | 432/π = index²·E₂(i) | [THM] | identification |
 | cos²(1/(Nπ)) | [DER] | QTC chain, §N, 2 physics inputs |
 | τ = i selection | [THM] | E₂* variational, H.1f |
-| IR = (j+N)/(j+L) | [DER conditional] | 4 steps [THM] + Σ=−χ [MOT] |
+| IR = (j+N)/(j+L) | [DER conditional] | 4 steps [THM] + Σ=−χ [DER cond. on weight=level, S108] |
 | π/36 = 1/(index·E₂) | [THM] | self-duality |
 | Form A vs B | [THM] | B dead at 10.5σ |
 
-Overall α formula: ~75% [THM/DER], up from ~70% at S100. The IR gap (Σ=−χ) requires an action principle on X₀(6) to close.
+Overall α formula: ~80% [THM/DER], up from ~75% at S107. Σ=−χ upgraded [MOT]→[DER cond.] (S108). Remaining gap: weight=level identification (self-referential but unique).
+
+### H.1h: VMF — saddle at τ=i [THM, S108]
+
+h(τ) = −log(y^{1/2}|η(τ)|²) has E₂*(τ)=0 as Euler-Lagrange equation [THM]. τ=i is a **saddle point** (not minimum): Hessian eigenvalues 1/4 ± π²E₄(i)/36 ≈ +0.649, −0.149, Morse index 1 [THM]. h is SL₂(ℤ)-invariant → descends to X(1) → **cannot select Γ₀(6)** [structural barrier]. No Γ₀(6)-specific functional with E₂*=0 as EL equation was found (5 attempts DEAD). Constrains future VMF attempts: any variational principle for τ=i must break SL₂(ℤ)-invariance.
 
 
 ## [DER] H.2: μ₀ = 6π⁵ and the μ formula
@@ -1952,28 +2057,46 @@ Dependencies: H.1, H.2
 ### Statement
 $$G = \frac{e^2}{\varepsilon_0 \cdot m_e^2 \cdot \alpha^{-2q}}, \qquad q = \frac{1}{\alpha^2 \cdot \mu_G}$$
 
-where μ_G = 1835.697. This is μ computed from the formula §H.2 at **NLO only** (c₁ = −1/5 term included, higher cₙ truncated), evaluated at the self-consistent α from the ring. The difference Δ = μ − μ_G = 0.456 (0.025%) is not a separate input — it is the truncation error of the μ-series, which encodes the sole channel through which particle content enters G.
+where μ_G = (3μ + μ_n − B_d/m_e)/4 = (m_p + m_d/2)/(2m_e) = 1835.697. This is the weighted nucleon mass average, involving the neutron mass m_n and deuteron binding energy B_d — **nuclear data external to LD**. The difference Δ = μ − μ_G = 0.456 = (B_d − Δm_np)/(4m_e) encodes nuclear isospin splitting and binding. μ_G is NOT derivable from §H.2 at any truncation order: H.2 gives μ ≈ 1836.153 at all orders (the series converges at α/π ≈ 0.002), not 1835.697.
 
 ### Leading order q
 q_LO = (index · ∏wᵢ)² / (N · π^{N+1}) = 432² / (6π⁷) = 186624 / (6 · 3020.29) = 10.298 (δ = 0.67% from exact q = 10.2298).
 
 ### Numerical result
-G_pred = 6.67410 × 10⁻¹¹ m³/(kg·s²).
-- vs CODATA 2018 (6.67430): −35 ppm (with CODATA α; paper's −30.3 ppm used intermediate ring α)
-- vs CODATA 2014 (6.67408): +2.6 ppm
-- At truncated μ_G = 1835.697: δG = −34.7 ppm (S66 correction)
+G_pred = 6.67407 × 10⁻¹¹ m³/(kg·s²).
+- vs CODATA 2018 (6.67430): −35 ppm (with CODATA α)
+- vs CODATA 2014 (6.67408): −0.1 ppm
+- Previous companion value 6.67410 was rounded incorrectly (S115 verification)
 
 ### Hierarchy formula
 M_Pl/m_e = α^{−q}/√(4πα). The exponential hierarchy arises because α²·μ_G ≈ 0.098 ≪ 1, making q ≈ 10.23 ≫ 1 and α^{−q} ≈ 10²².
 
-### G is not independent
-G is the ring-closure condition: the LAST equation that must be satisfied once α, μ, and all masses are determined. It is not a free input. If the ring HF→α→μ→masses→FG→α converges, G is fixed. The $-30$ ppm deviation measures the weakest link in the chain.
+### G is a prediction given nuclear data [S110 CORRECTED]
+G is predicted by the forward pass α(H.1) → μ(H.2) → μ_G(nuclear) → G(H.3). It is NOT a ring-closure condition: the ring is open at G because μ_G requires nuclear masses (m_n, B_d) not derived from Γ₀(6). The −35 ppm deviation measures the precision of the forward prediction, not the weakest link of a closed ring.
+
+### Ring is open at G [S110, KEY]
+The ring is closed at L1 (α, μ): both are derived from Γ₀(6) without external inputs. The ring is **open** at L1b (G): the formula G requires μ_G = (3μ + μ_n − B_d/m_e)/4, which involves nuclear masses that LD does not derive. The 248 ppm gap between μ and μ_G is amplified ×101 by the G-elasticity (H.3a), producing the observed −35 ppm deviation. This was known from constitution v4.4 (§G5) but obscured in the companion by the incorrect description of μ_G as "NLO truncated H.2" (corrected S110).
 
 ### Δ = μ − μ_G = 0.456 (0.025%)
 This is the SOLE channel through which particle content enters G [S44]. μ comes from all particles; μ_G is the truncated version entering q. The difference Δ encodes all the information about individual particle masses that gets amplified into G.
 
 ### Ultrasensitivity
 δq = 10⁻⁴ shifts G by ~1000 ppm. This is why G is the most sensitive test: it amplifies tiny errors in μ by ~100×.
+
+
+### [THM] H.3a: G-elasticity (S110)
+
+For G = C₀ · α^{2q} with q = 1/(α²·μ_G):
+
+∂(ln G)/∂(ln α)|_{μ_G} = 2q(1 + 2·ln α⁻¹) = 221.8
+
+∂(ln G)/∂(ln μ_G)|_{α} = 2q·ln α⁻¹ = 100.7
+
+Ratio: α-sensitivity = 2.20× μ_G-sensitivity.
+
+Proof: direct differentiation. |F'(α*)| = 2·ln(α⁻¹) = 9.84 >> 1 → naive iteration diverges (not Banach contraction). Verified numerically <0.001%. ∎
+
+Error budget: α precision (0.03 ppb Form A) → δG = 0.007 ppm. μ_G gap (248 ppm) → δG ≈ 25000 ppm = 2.5%. G-error entirely μ_G-dominated.
 
 
 ## [DER] H.4: √2-knockout
@@ -2000,11 +2123,15 @@ Source: Paper §5.5, S38
 Status: [DER]
 
 ### Statement
-The ring HF → α → μ → g → masses → FG → α converges:
-- **With anchors (e + p):** 3 iterations to 1/α = 137.0359662 (0.24 ppm from CODATA).
-- **Without anchor p:** 6 iterations to 1/α = 138.13 (proton = bottleneck).
+The forward pass H.1 → α → H.2 → μ → (nuclear data) → μ_G → H.3 → G predicts G without G as input:
+- G_pred = 6.67410 × 10⁻¹¹, δG = −35 ppm (CODATA 2018).
+- Inputs: α (from H.1), μ (from H.2), **plus nuclear masses** (m_n, B_d) for μ_G.
 
-α is a **fixed point** of the iteration, not an eigenvalue.
+**The ring is NOT a Banach contraction mapping.** The naive iteration F(α) = (G_exp/C₀)^{α²μ_G/2} has |F'(α*)| = 2·ln(α⁻¹) ≈ 9.84 >> 1 and diverges. The "3 iterations" convergence uses Newton's method (quadratic convergence from a good initial guess), not geometric contraction.
+
+**The ring is NOT closed at G.** Substituting μ from H.2 (= 1836.153) instead of μ_G (= 1835.697) into H.3 gives δG = +2.5% — unacceptable. The gap μ − μ_G = 0.456 = (B_d − Δm_np)/(4m_e) requires nuclear physics that LD does not derive. G is a **prediction given nuclear data**, not a ring-closure condition.
+
+α is determined by H.1 independently of G. μ is determined by H.2 given α. The system is a forward pass with a consistency check, not a fixed-point iteration.
 
 ### How it works
 1. Start with α_guess (e.g., CODATA value)
@@ -2015,7 +2142,7 @@ The ring HF → α → μ → g → masses → FG → α converges:
 6. Extract α from G (inverting §H.3)
 7. Compare with α_guess → iterate
 
-The ring converges because each step is a contraction mapping near the fixed point. The proton (m_p = m_e·μ, anchor) fixes g without relying on the δK formula, making the ring insensitive to L2 errors.
+The ring uses Newton's method near the fixed point (not geometric contraction). The proton (m_p = m_e·μ, anchor) fixes g without relying on the δK formula, making the ring insensitive to L2 errors.
 
 ### Ring blindness [S63, KEY]
 The ring is BLIND to the choice of (a,b) in the δK formula. Reason: the proton has ℓ = 0, K = 1, so δK_pred(p) = (α/2π)·Φ(4) regardless of (a,b) — and the proton is the sole L1↔L2 channel (it determines μ_G).
@@ -2025,7 +2152,8 @@ Consequence: the ring CANNOT select between bare ω_{X/Y} (a=2, b=1) and D₀ tw
 ### Hierarchy of theory levels [S63, KEY]
 ```
 L0: Γ₀(6) exists                     [POSTULATE]
-L1: α, μ, G from Γ₀(6)              [DER/THM] — tested by ring
+L1: α, μ from Γ₀(6)                 [DER/THM] — closed, no external inputs
+L1b: G from α + μ_G                  [DER] — OPEN: μ_G requires nuclear data (m_n, B_d)
 L2: Φ, ℓ → individual masses         [THM for (a,b), DER for ℓ] — tested by signs
 L3: CKM, PMNS → mixing/dynamics      [OBS for CKM, CONJ for PMNS]
 ```
@@ -2124,7 +2252,7 @@ Qualitative match: θ₁₃ is the smallest PMNS angle (exp: 0.022 ≈ 0), θ₂
 The eigenvector computation is [THM-arith]: pure linear algebra of a concrete 3×3 matrix. The identification «these eigenvectors = PMNS columns» is [CONJ]: M_lep is a block of BB^T (dessin biadjacency), not a neutrino mass matrix. The physical bridge M_lep → M_ν is not proven. See §I.25 (Identification Hierarchy) for the precise logical chain and the seesaw structural analogy that motivates but does not close this gap.
 
 ### What breaks μ-τ [OBS, S73 §4.5]
-τ is the UNIQUE lepton whose S-partner (σ₁-image) exits the fermionic sector: σ₁(τ) = H (boson). For e and μ: S-partners are quarks (s and b respectively). This provides the sole qualitative source of μ-τ breaking. Quantitative mechanism: OPEN.
+τ is the UNIQUE lepton whose S-partner (σ₁-image) exits the fermionic sector: σ₁(τ) = H (boson). For e and μ: S-partners are quarks (d and b respectively; see §O.1). This provides the sole qualitative source of μ-τ breaking. Quantitative mechanism: OPEN.
 
 
 ## [CONJ] I.4: sin²θ₁₃ candidates
@@ -2167,6 +2295,20 @@ char(L) = x(x−1)(x−3)²(x−4)(x−5)³(x²−5x+1)(x²−5x+5)
 Discriminants: Δ₁ = 21 = d₂·L, Δ₂ = 5 = N−1. Sum Δ₁+Δ₂ = 26 = 2·13 = 2(d₁²+d₂²). Identification with LD invariants is [OBS].
 
 Dessin-invariant: identical for all 36 isomorphic dessins (verified 3/3).
+
+### [THM-computational] Isospectrality X₀(6) ↔ X₀(11) (S108)
+
+The Cayley graphs on P¹(ℤ/6ℤ) and P¹(ℤ/11ℤ) have **identical** Laplacian spectra (same char poly above). Graphs are SNI (spectral non-isomorphic): σ∞ cycle types differ ({6,3,2,1} vs {11,1}). All Tr(Aᵏ) coincide. **Consequence:** Cayley spectrum CANNOT distinguish N=6 from N=11. Any spectral invariant (traces, det', heat kernel, zeta) is shared. Distinction lies in cuspal structure (σ∞), invisible to undirected graph. **STM program DEAD** (S108).
+
+### [THM-computational] det'(L) = N²(N−1)⁴ uniquely at N=6 (S108)
+
+det'(L_Cayley) = 22500 for both X₀(6) and X₀(11). The equation N²(N−1)⁴ = 22500 = 2²·3²·5⁴ has unique positive integer solution N=6. Spanning trees: τ(G) = det'/n = 1875 = d₂·(N−1)⁴. **Status:** formula verified numerically; analytic proof connecting Cayley det' to N²(N−1)⁴ not yet written.
+
+### [THM-comb] Graph automorphism (S112, corrects S109)
+
+The undirected Cayley graph has |Aut(G)| = 2. The sole non-trivial automorphism is **(c ↔ p)**: the swap of the two multi-edge endpoints. **Proof:** Only c and p have non-distinct neighbor multisets (nbrs(c) = {u,p,p}, nbrs(p) = {c,c,u}); all other 10 vertices have 3 distinct neighbors (verified computationally, §O.1). Undirected operator basis has rank 11 (not 12). **Consequence:** any operator approach to Φ−Lℓ via undirected Cayley graph is blocked at rank 11; directed operators restore rank 12 but give tautological interpolation (dim ℝ¹² = 12).
+
+**S109 CORRECTION:** The S109 claim "φ = (W↔H)(e↔b)(s↔μ)(τ↔d)" was computed from an incorrect σ₁ map and is **WRONG**. The "minimal breaking word (σ₀σ₁)³" claim is also wrong. See §Z corrections log.
 
 
 ## [THM] I.7: No-go for f(M_lep) → 4/13
@@ -2906,6 +3048,91 @@ DESI reports 3σ tension between cosmological constraints and the oscillation fl
 ---
 
 
+## [THM-arith] I.29: Commutator [M_lep, L_eff] and Exact Mixing Formula
+Source: S116
+Status: [THM-arith] (exact rational arithmetic, SymPy-verified)
+Dependencies: D.5 (M_lep), I.11 (L_eff)
+Verified: SymPy symbolic (commutator, decomposition, eigenbasis rotation, tan formula)
+
+### I.29.1 Noncommutativity [THM-arith]
+
+```
+              ⎡  0      6/11    37/55 ⎤
+[M_lep, L_eff] = ⎢−6/11    0     −7/55 ⎥  ≠  0
+              ⎣−37/55   7/55     0    ⎦
+```
+
+In integer form: 55·C = [[0,30,37],[−30,0,−7],[−37,7,0]].
+
+Entries in LD invariants:
+- C_eμ = 6/11 = N/dim M₁₀ (= 30/55)
+- C_μτ = −7/55 = −L/((N−1)·dim M₁₀) (= μ-τ breaking parameter of L_eff)
+- C_eτ = 37/55
+
+**Sum rule:** C_eτ = C_eμ + |C_μτ|, i.e., 37 = 30 + 7.
+
+**||C||²_F = 4636/3025** (= 2²·19·61 / 5²·11², irreducible).
+
+### I.29.2 Orthogonal Decomposition [THM-arith]
+
+55·C = (67/2)·A₁ + (7/2)·A₂, equivalently C = (67/110)·A₁ + (L/110)·A₂
+
+where 110 = 2(N−1)·dim M₁₀, and:
+
+**A₁ = [[0,1,1],[−1,0,0],[−1,0,0]]** — μ-τ symmetric incompatibility
+- Rotation axis: ω₁ = (0, −1, 1), purely in μ-τ plane
+- |ω₁|² = d₁ = 2
+
+**A₂ = [[0,−1,1],[1,0,−2],[−1,2,0]]** — μ-τ breaking
+- Rotation axis: ω₂ = −(d₁, 1, 1) = −(2, 1, 1)
+- |ω₂|² = d₁² + 2 = N = 6
+
+**Orthogonality:** tr(A₁·A₂ᵀ) = 0. ω₁·ω₂ = 0. [THM-arith, SymPy exact]
+
+Norm contributions: A₁ carries 4489/4636 = **96.8%** of ||C||²_F, A₂ carries 147/4636 = **3.2%**.
+
+### I.29.3 67-Cancellation and Exact Mixing Formula [THM-arith]
+
+In the M_lep eigenbasis (v₁ for λ₁=1, v₂ for λ₂=4−√3, v₃ for λ₃=4+√3):
+- L̃₂₂ = (201/4 + 335√3/12)/55
+- L̃₃₃ = (201/4 − 335√3/12)/55
+- L̃₂₃ = 67√6/(12·55)
+
+All (2,3)-block elements of 55·L̃ factor through 67 = (N−1)·dim M₁₀ + index = 55 + 12.
+The 67 cancels in the mixing angle:
+
+**tan(2θ) = √d₁/(N−1) = √2/5**
+
+**sin²(2θ) = d₁/d₂³ = 2/27**
+
+where θ is the rotation angle between the 2nd and 3rd M_lep eigenstates (both μ-τ symmetric, λ = 4±√3) in the L_eff frame.
+
+sin²θ = (9−5√3)/18 ≈ 0.01887 (small branch).
+
+### I.29.4 Physical comparison [OBS]
+
+Numerically sin²θ ≈ 0.019 is near sin²θ₁₃(exp) ≈ 0.022 but pull = +5.6σ (NuFIT 5.x: 0.02203±0.00056).
+
+**Structural caveat:** This angle measures mixing between two μ-τ SYMMETRIC eigenstates of M_lep. Physical θ₁₃ is μ-τ BREAKING. The angle lives in the A₁ sector (96.8% of ||C||²), not the A₂ sector. Numerical proximity may be coincidental.
+
+### I.29.5 Consequence: Independence of CONJ I.3-ID and CONJ I.14-ID [THM-arith]
+
+[M_lep, L_eff] ≠ 0 ⟹ M_lep and L_eff have different eigenvectors ⟹ proving [Mν, L_eff] = 0 does NOT prove M_lep eigenvectors = PMNS columns.
+
+PMNS has **3 independent root gaps**:
+- (α) CONJ I.14-ID: [Mν, L_eff] = 0
+- (β) CONJ I.3-ID: M_lep eigenvectors = PMNS columns
+- (γ) CONJ I.17: t = √5/2
+
+### I.29.6 Identity d₁ + (N−1)² = d₂³ [THM-arith, 31st path]
+
+For (d₁,d₂) = (2,3) with N = d₁d₂: 2 + 25 = 27 = 3³. ✓
+
+**Uniqueness:** Exhaustive scan 1 ≤ d₁,d₂ ≤ 50, N = d₁d₂: only (1,1) and (2,3) satisfy. Trivial (1,1) excluded by any LD condition (N ≥ 2, or Catalan). Arises from sin²(2θ) = d₁/d₂³ formula.
+
+---
+
+
 # J. L-FUNCTIONS
 
 ## [THM] J.1: η-product relations
@@ -2987,7 +3214,7 @@ R₃(−index) = R₃(−12) = 3456 = 2j(i).
 
 | Polynomial | Discriminant | LD expression |
 |-----------|-------------|---------------|
-| R₃ (cubic) | −972 | −d₁²d₂⁵ |
+| R₃ (scaled: R₃(12s)/12³ = s³+21s²+27s+9) | −972 | −d₁²d₂⁵ |
 | P₄ (full quartic) | −2²⁸·3¹⁷ | pure {d₁, d₂} |
 | Q₂ (j=1728 quadratic) | 432 | N³(N−4) = index·∏wᵢ |
 
@@ -3635,15 +3862,37 @@ Linear a₂ formula (171 pairs, empty). Polynomial a₂ deg≤2 (fails). 10 grap
 
 **S106:** QTC on 12 sheets = trivial blow-up of 4×4 (face-constant phases give rank 3). IR through QTC = structural mismatch (rational vs trigonometric, 5 attempts fail). φ(d₁)=1/(2π) tautological for d₁=2. 4×4 eigenvalues do not match LD invariants.
 
+## X.15: S110 (Ring contraction analysis)
+
+**DEAD: Ring as Banach contraction [S110].** Naive iteration F(α) = (G_exp/C₀)^{α²μ_G/2} has |F'(α*)| = 2·ln(α⁻¹) = 9.84 >> 1. Not a contraction in any neighborhood. "3 iterations" = Newton's method, not geometric convergence. The ring is a forward prediction (α → μ → μ_G → G), not a fixed-point iteration.
+
+**CORRECTED: μ_G description [S110].** Companion H.3 stated "μ_G is μ from H.2 at NLO only". This is false: H.2 at all truncation orders gives ~1836.15, not 1835.70. Correct: μ_G = (3μ + μ_n − B_d/m_e)/4 (nuclear masses). Error introduced during S93, not caught through S109.
+
+**WORKFLOW RULE: CLOSURE-TEST.** Every closure claim must be verified by substituting only derived quantities and checking the numerical result. If miss >1%, claim is false.
+
+## X.16: S108–S109 (Spectral, variational, operator)
+
+**DEAD: STM for IR or any N-specific quantity [S108, PRINCIPLED].** Cayley graphs X₀(6) and X₀(11) are isospectral (SNI). All spectral invariants (Tr Lᵏ, det', ζ_L(s), heat kernel) shared. Distinction lies in σ∞ (cuspal structure), invisible to undirected spectrum.
+
+**DEAD: VMF as minimum principle for τ=i [S108].** h(τ) = −log(y^{1/2}|η|²) has τ=i as saddle (Morse index 1), not minimum. Hessian eigenvalues: 1/4 ± π²E₄(i)/36. h is SL₂(ℤ)-invariant → cannot select Γ₀(6). Five Γ₀(6)-specific variants tested, all fail.
+
+**DEAD: ω = d(ln j)/dt for per-particle Φ(n) [S109].** R(t) = 3P₄'/P₄ is flat near cusps: R ≈ 1 ± 0.22 for |t| < 2, but Φ(n) ranges [0, 35.7] for quarks (35× mismatch). j depends on t⁶ near 6-cusp, killing angular information. ω resolves face type → ℓ [✓] but not face position → n [✗]. G.9 parallel remains [MOTIVATED], not upgradeable.
+
+**DEAD: Weighted Laplacian A_w = d₂(σ₀+σ₀⁻¹) + d₁σ₁ [S109].** Global weights do not break graph automorphism (c↔p). Rank 6, correlation 0.52 with Φ−Lℓ.
+
+**DEAD: ALL operator-diagonal approaches to Φ−Lℓ [S109, PRINCIPLED].** 12 unique cuspal triples → 12-dimensional space. Any 12-vector decomposes in rank-12 basis. This is interpolation (dim ℝ¹² = 12), not derivation. Applies to: A^k (rank 6), (σ₀σ₁)^k extended (rank 12), polynomial in (F,Fσ₁,Fσ₀) (rank 12), face-weighted D_F·A^k (rank 12 with D_{Fσ₁}).
+
+**WORKFLOW: GREP-BEFORE-COMPUTE [S109].** F.7 (ε₀ = ε(Fσ₀)) rediscovered from scratch instead of reading companion line 1224. Recurrence of S84 failure. Rule: `grep` companion for relevant keywords before any new computation.
+
 
 
 # Y. OPEN QUESTIONS
 
-1. **Gap 3: CLOSED (S100).** (3a) Form α/(2π): 4D Weyl [THM, G.3/S29]. (3b) Universality: ring closure excludes edge-local coupling (100% spread vs 0.002% ring precision) [DER+MOTIVATED, M.7/S100]. (3c) Value 1/α ≈ 137.036: ring fixed point [THM, H.3/S31+S38]. (3d) EM identification: EW operator T₃−d₂|Q| = −ℓ/2 [THM, G.8/S32]. All discrete content of δK derived from dessin via ε-η architecture. Remaining theoretical interest: spectral uniqueness of global coupling definition (M.7 gap), trace formula route to α/(2π) (alternative to 4D Weyl).
-2. **Gap 9: [DER+MOTIVATED] (S99–S100).** Schur complement L_eff gives exact rational PMNS (I.11–I.14): sin²θ₁₃(Schur) = 1/26 (−29σ, insufficient alone). Heat kernel at t = √5/2 gives all 3 angles within 2σ (I.17, [CONJ]). Representation-theoretic derivation (I.26): irrep localization → moment theorem → P₁=1, P₂=5 → t = √P/d₁ [DER]. S₃ polarization (I.27): w₊/w₋ = d₂/L for φ-pair (26th path), Σλ·w₊ = |B₁|, Pythagorean identity t₂²−t₁² = 1. Spectral anatomy (I.18–I.24): φ-pair dominates θ₁₃ at 38%. **Layers:** Layer 0: char(L) → Q₁,Q₂ [THM]. Layer 1: P₁=1, P₂=5 from moments [THM]. Layer 1b: P₂−P₁ = d₁² [THM]. Layer 2: t=√P/d₁ [DER]. Layer 3: PMNS at t₁,t₂ → Σ|p|=2.96 (NuFIT 5.x) but 4.52 (NuFIT 6.0 IC19) / 9.65 (IC24+SK, θ₂₃=7.9σ) [CONJ, I.17]. **Irreducible gap:** linearity of f(P) at 2 points; ν₁↔ν₂ swap (1 bit). ≥38 dead directions (X.12–X.13). **Remaining:** (a) derive linearity or accept [DER]; (b) derive ν₁↔ν₂ swap; (c) Lagrangian origin.
+1. **Gap 3: CLOSED for discrete content (S100). Ring OPEN at G (S110).** (3a) Form α/(2π): 4D Weyl [THM, G.3/S29]. (3b) Universality: ring closure excludes edge-local coupling (100% spread vs 0.002% ring precision) [DER+MOTIVATED, M.7/S100]. (3c) Value 1/α ≈ 137.036: from H.1 [DER, H.1/S105]. (3d) EM identification: EW operator T₃−d₂|Q| = −ℓ/2 [THM, G.8/S32]. **S110 correction:** Ring is not a contraction mapping (|F'| = 9.84 >> 1). G requires nuclear input μ_G = (3μ + μ_n − B_d/m_e)/4, not derivable from H.2. G is a prediction given nuclear data, not a ring-closure condition. Hierarchy split: L1 (α, μ) closed; L1b (G) open.
+2. **Gap 9: [DER+MOTIVATED] (S99–S100). S116 structural analysis.** Schur complement L_eff gives exact rational PMNS (I.11–I.14): sin²θ₁₃(Schur) = 1/26 (−29σ, insufficient alone). Heat kernel at t = √5/2 gives all 3 angles within 2σ (I.17, [CONJ]). Representation-theoretic derivation (I.26): irrep localization → moment theorem → P₁=1, P₂=5 → t = √P/d₁ [DER]. S₃ polarization (I.27): w₊/w₋ = d₂/L for φ-pair (26th path), Σλ·w₊ = |B₁|, Pythagorean identity t₂²−t₁² = 1. Spectral anatomy (I.18–I.24): φ-pair dominates θ₁₃ at 38%. **S116 correction: PMNS has 3 independent root gaps** (not 2): (α) CONJ I.14-ID [Mν, Leff]=0, (β) CONJ I.3-ID M_lep→PMNS, (γ) CONJ I.17 t=√5/2. Independence of α,β proved by [M_lep,L_eff]≠0 (I.29). **Layers:** Layer 0: char(L) → Q₁,Q₂ [THM]. Layer 1: P₁=1, P₂=5 from moments [THM]. Layer 1b: P₂−P₁ = d₁² [THM]. Layer 2: t=√P/d₁ [DER]. Layer 3: PMNS at t₁,t₂ → Σ|p|=2.96 (NuFIT 5.x) but 4.52 (NuFIT 6.0 IC19) / 9.65 (IC24+SK, θ₂₃=7.9σ) [CONJ, I.17]. **Irreducible gap:** linearity of f(P) at 2 points; ν₁↔ν₂ swap (1 bit). ≥38 dead directions (X.12–X.13). **Remaining:** (a) derive linearity or accept [DER]; (b) derive ν₁↔ν₂ swap; (c) Lagrangian origin.
 3. **n-formula offsets = −d₁, −1** [OBS]. Slopes [THM] via F.3a. Offsets absorbed into g→n step but origin in ramification indices remains [OBS].
 4. **K-cipher: RESOLVED by ε-η architecture (F.6–F.7b-K).** Remaining: (a) analytical product constraint F.7c, (b) d-quark EWSB exception origin.
-5. **IR term of α: [DER conditional] (S103, was [FITTED]).** Form A: IR = (π/36)·(j+N)/(j+L). 5-step chain: 4 steps [THM] + Σ=−χ [MOT]. Form B (paper v5.5) DEAD at 10.5σ. Paper v6 must use Form A. Remaining gap: action principle for Σ=−χ identification.
+5. **IR term of α: [DER conditional] (S103+S108, was [FITTED]).** Form A: IR = (π/36)·(j+N)/(j+L). 5-step chain: 4 steps [THM] + Σ=−χ [DER cond. on weight=level, S108]. Form B (paper v5.5) DEAD at 10.5σ. Paper v6 must use Form A. Remaining gap: weight=level self-referential identification (unique but not derived from deeper principle).
 6. **cos²(1/(Nπ)): RESOLVED [DER] (S105–S106).** QTC 12-step chain derives cos² from covering geometry. 42/42 checks. Two standard physics inputs (perturbativity, Born interpretation). See §N. Was [MOT] with 9 dead approaches before QTC.
 7. **λ = d₂²/K — graph identity proven, physics gap remains.** Bridge from spanning-tree fraction to sin θ_C.
 8. **μ-τ breaking → quantitative θ₁₃.** Schur complement (I.11) provides exact mechanism: σ₁(τ)=H breaks μ-τ with parameter 7/55. Heat kernel at t=√5/2 corrects to experiment. Open: derive t.
@@ -3653,6 +3902,35 @@ Linear a₂ formula (171 pairs, empty). Polynomial a₂ deg≤2 (fails). 10 grap
 12. **Kirchhoff = |P³(𝔽_{d₂})| = 1/α₃(d₁)** [THM M.3]. Projective-space dimension 2d₁−1 = 3 unexplored.
 13. **φ-zero structural role** [THM D.6]. Z_φ = {p,c,u,t}. Golden hierarchy 1:φ:φ² with norm √|B₁|. 4/13 = full interference [CONFIRMED]. Open: physical meaning of Z_φ, connection to forced spanning-tree edges (E.8).
 14. **PMNS spectral anatomy** [OBS I.23–I.24]. e-μ democracy broken by exactly 2 sectors (λ=1, λ=4) with ratios d₁², d₂². M = 20·Q_φ satisfies M² = L(K₃) (I.20). D_τ-duality links two discriminants (I.21). Open: derive these from first principles.
+
+### Y.15: Coherence Map of Weak Points (S116, computational)
+
+29 weak sections (OBS/CONJ/MOT/ALIVE-WEAK/dual) decompose into **7 independence classes + 12 isolates**.
+
+**Class α: CONJ I.14-ID chain** (3 sections: I.14, I.17, I.22)
+Root gap: [Mν, Leff] = 0. Cascade = 2 (I.14 → I.17 → I.22).
+
+**Class β: CONJ I.3-ID chain** (2 sections: I.3, I.5)
+Root gap: M_lep eigenvectors = PMNS columns. Cascade = 1.
+**Independent of α:** [M_lep, L_eff] ≠ 0 [THM-arith, I.29].
+
+**Class γ: Heat kernel** (2 sections: I.9, I.9a)
+Gap: t = 1/d₁ identification. Supported by I.6 [THM].
+
+**Class δ: K-cipher** (3 sections: F.5, F.5e, F.8) — **RESOLVED** by F.7b-K [THM].
+
+**Class ε: δK structure** (2 sections: G.10, G.6) — **spectrally isolated** (Fiedler: positive component, separated from PMNS core).
+
+**Class ζ: Peripheral** (5 sections: B.5, L.5, I.2, I.24, I.9d)
+Single weak link each, no cascade potential.
+
+**Isolates** (12): E.2–E.6 (CKM), G.7, I.1, I.4, I.23, A.3, M.4, M.5.
+
+**Strong hubs:** I.6 [THM] supports 3 weak sections. O.1 [THM-comb] anchors F and I sectors. D.5 [THM] supplies M_lep.
+
+**Leverage budget:** 3 root gaps (α, β, γ) control 4 downstream sections. Remaining 22 require individual mechanisms.
+
+**Fiedler partition** (λ₂ = 2.83): PMNS + K-cipher core is one topological blob (not further separable). G.10/G.6 genuinely disconnected. CKM (E.2–E.6) fully isolated (zero cross-references to other weak sections).
 
 
 ---
@@ -3676,6 +3954,10 @@ Linear a₂ formula (171 pairs, empty). Polynomial a₂ deg≤2 (fails). 10 grap
 | **cos² status** | **[MOT] (9 dead)** | **[DER] (QTC 12-step chain)** | **S105–S106** |
 | **IR status** | **[FITTED]** | **[DER conditional on Σ=−χ]** | **S103** |
 | **τ=i selection** | **postulate** | **[THM] via E₂*=0** | **S101** |
+| **μ_G description** | **"H.2 at NLO truncated"** | **nuclear masses: (3μ+μ_n−B_d/m_e)/4** | **S110** |
+| **Ring status** | **"contraction mapping, 3 iter"** | **forward prediction + Newton; \|F'\| = 9.84 >> 1** | **S110** |
+| **G status** | **"ring closure, not independent"** | **prediction given nuclear data; ring open at G** | **S110** |
+| **Hierarchy L1** | **L1: α, μ, G** | **L1: α, μ (closed); L1b: G (open, nuclear input)** | **S110** |
 | **T₃(H)** | **0** | **−1/2** | **S68** |
 | CKM | FAILED 0/4 | **OBS 4/4** | S72 |
 | ρ = L(f₁)/L(f₂) | ≈1.051 | **≈1.389** | S71 |
@@ -3752,6 +4034,29 @@ Linear a₂ formula (171 pairs, empty). Polynomial a₂ deg≤2 (fails). 10 grap
 | **I.4 exp source** | "NuFIT" (unspecified) | **NuFIT 5.x** (explicit) | **S101 audit** |
 | **I.26.4 justification** | "dimensional analysis" | **"scale matching"** (all quantities dimensionless) | **S101 audit** |
 | **I.28.4 DESI 3σ** | "F-C in 3σ tension with floor" | **Clarified**: 3σ from Bayesian Σm_{ν,eff} analysis, not direct F-C vs floor | **S101 audit** |
+| **γ_CKM exp** | **65.98°±4.0° (−0.015σ)** | **(62.8±2.6)° LHCb 2025 (−1.25σ)**. Now max-pull CKM. | **S109** |
+| **Σ=−χ status** | **[MOT]** | **[DER conditional on weight=level]** (S108: 3a-3e chain) | **S108** |
+| **α overall** | **~75%** | **~80%** (Σ=−χ upgrade) | **S108** |
+| **CKM χ²/dof** | **0.40** | **1.96** (γ dominates) | **S109** |
+| **σ₁ full map** | (ut)(cp)(be)(dH)(sμ)(Wτ) implicit | **(ut)(cp)(bμ)(de)(sW)(τH)** unique, MCT 12/12 | **S112** |
+| **σ∞ full cycle** | not explicitly recorded | **(cubsdt)(eτμ)(WH)(p)** type (6,3,2,1) | **S112** |
+| **σ₀ full orbits** | not explicitly recorded | **(cup)(bte)(sμH)(dWτ)** type (3⁴) | **S112** |
+| **I.6 Aut(G)** | (W↔H)(e↔b)(s↔μ)(τ↔d), "minimal breaking word" | **(c↔p) only, \|Aut\|=2** (multi-edge endpoints) | **S112** |
+| **I.3 σ₁(e) text** | "S-partners are quarks (s and b)" | **"(d and b)"**: σ₁(e)=d, σ₁(μ)=b | **S113** |
+| **F.5/F.5b formula** | δ(e, pre_anc) in quark/S=anc branch | **δ(σ₁(e), anchor)**: c=σ₁(anchor), not pre_anchor | **S113** |
+| **F.5e mechanism** | "pre_anchor +1" | **"σ₁(c)=anchor term"** | **S113** |
+| **E.8 boundary pairs** | {d⊕H} × {W⊕τ} | **{s⊕W} × {τ⊕H}** (WV_E and WV_F, both star—oth) | **S113** |
+| **E.8 interior** | {b, e, μ, s} | **{b, μ, d, e}** (WV_C and WV_D) | **S113** |
+| **pre_anchor identity** | c (conflated with σ₁(anchor)) | **u** = σ₀⁻¹(p); σ₁(p) = c is a different edge | **S113** |
+| **D.1 proof text** | σ₀(σ₁(x))=x in Forward/Reverse | **σ₀⁻¹(σ₁(x))=x** (MCT: σ∞=σ₀⁻¹·σ₁). m=1 unaffected | **S115** |
+| **F.5 table** | truncated after 7/11 rows | **11/11 complete** (e,τ,μ,W,H added) | **S115** |
+| **K.1 disc(R₃)** | "R₃ (cubic)" | **"R₃ (scaled: R₃(12s)/12³)"**. Raw disc = −2¹⁴·3¹¹ | **S115** |
+| **H.3 G_pred** | 6.67410 × 10⁻¹¹ (rounded up) | **6.67407 × 10⁻¹¹** (exact computation, δG = −35 ppm consistent) | **S115** |
+| **F.5 status** | [OBS] | **[THM]** (subsumed by F.7b-K constructive derivation) | **S116** |
+| **F.5e status** | [OBS] | **[THM-arith]** (arithmetic on derived K) | **S116** |
+| **F.8 status** | [OBS] | **[THM-arith/OBS]** (Σn from F.3; Σℓ partial) | **S116** |
+| **PMNS root gap count** | 2 (I.14-ID, I.17) | **3** (I.14-ID, I.3-ID, I.17 independent). Proved: [M_lep, L_eff] ≠ 0 (I.29) | **S116** |
+| **A.3 path count** | ≥30 | **≥31** (add d₁+(N−1)²=d₂³ from I.29) | **S116** |
 
 
 *Assembled: 2026-03-15, updated post-S100 (2026-03-20).*
@@ -3776,4 +4081,12 @@ Linear a₂ formula (171 pairs, empty). Polynomial a₂ deg≤2 (fails). 10 grap
 *S104: 137=index·Σ(1/K) [THM], 29th path. Self-duality BULK·IR_coeff=index [OBS]. Fourier phases at cusps disproven (KR12). |d₁−d₂|=1 iff d₁=2 [THM], 30th path (lemma, not independent). BB^T eigenvalues = D.3 restatement (not new). 6 dead cos² approaches.*
 *S105: QTC v2.2 created. cos² upgraded [MOT]→[DER] via 12-step chain (78/78 checks). 3 DEAD approaches added (#7-9). Alternative scan: best unified 8.7 ppb vs Form A 0.03 ppb.*
 *S106: QTC directions 1-4 explored (Fricke distance, φ(d₁)=1/(2π), sheets, IR). Caveats C1-C3 strengthened. Fricke distance N.6 [THM], d₁=2 degeneracy N.7 [THM], dimension matching N.5 [THM]. 42/42 final checks. Companion integration.*
-
+*S110: μ_G description CORRECTED (nuclear masses, not H.2 truncation). Ring NOT contraction (|F'|=9.84). G prediction OPEN (requires nuclear data). H.3a G-elasticity [THM]: 222/101. Hierarchy L1→L1+L1b. CLOSURE-TEST workflow rule added.*
+*S107: Bootstrap invariant F(N)=B²·lnB/M: N=6 unique with 10⁴³ separation [THM-analytic]. Γ₀ family privilege [THM-computational]. N.1 (amplification identity) = tautology. N.3 (Banach) DEAD per S110. Paths 31-32 not independent → A.3 stays ≥30.*
+*S108: Isospectrality X₀(6)↔X₀(11) [THM-computational] kills STM. det'(L)=N²(N−1)⁴ uniquely N=6. Σ=−χ upgraded [MOT]→[DER cond. on weight=level]. VMF saddle at τ=i [THM]. α overall →~80%.*
+*S109: ω DEAD for per-particle Φ(n). All operator-diagonal DEAD (dim ℝ¹²=12 tautology). Graph automorphism [OBS→CORRECTED S112]. γ_CKM updated: (62.8±2.6)° LHCb 2025, pull −1.25σ. GREP-BEFORE-COMPUTE rule.*
+*S112: Unique monodromy proven (1/480 candidates). σ₁ map CORRECTED: (bμ)(de)(sW)(τH). Aut(G)=(c↔p), |Aut|=2. σ₀-orbit invariants [THM-arith]. σ₁-pair n-sums [OBS].*
+*S113: Companion audit — 7 errors patched (1 formula F.5b, 6 text/labels). §O.1 added (monodromy SSoT). E.8 boundary/interior relabeled. MCT rule established. 0 theorems affected.*
+*S114: Tier-1 programmatic audit — 11 critical nodes, 11 PASS. 2 text-level issues (D.1 σ₀↔σ₀⁻¹, F.5 table truncation), 1 minor ambiguity (K.1 disc label). 0 theorems affected. Full chain σ₀,σ₁,σ∞ → α⁻¹ independently verified.*
+*S115: Tier-2 verification — E.8 CKM (5 pulls ✓, χ²/dof=1.95), I.17 PMNS (NuFIT 6.0 6/6 ✓), K.9 Moonshine (16 coefficients ✓), H.2–H.3 (μ₀,μ,G ✓; G_pred CORRECTED 6.67410→6.67407), QTC (cos²,BULK,α⁻¹,Fricke ✓). 3+1 patches applied. Meta-audit: DAG ✓ (0 cycles), 73 [THM] — 0 inflation, Z-log S112–S113 complete.*
+*S116: Coherence map (Y.15): 29 weak → 7 classes + 12 isolates. Commutator [M_lep,L_eff]≠0 (I.29) [THM-arith]: 55·C=[[0,30,37],[−30,0,−7],[−37,7,0]], orthogonal decomposition A₁⊥A₂. tan(2θ)=√2/5, sin²(2θ)=d₁/d₂³=2/27 [THM-arith]. 67-cancellation in eigenbasis. PMNS root gaps: 3 (not 2). 31st path: d₁+(N−1)²=d₂³. Status patches: F.5→[THM], F.5e→[THM-arith], F.8→[THM-arith/OBS].*
