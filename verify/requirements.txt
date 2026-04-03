@@ -1,0 +1,4 @@
+# LD Verification Suite — Python 3.10+
+# No Sage required. stdlib fractions for exact arithmetic.
+numpy>=1.24
+sympy>=1.12
