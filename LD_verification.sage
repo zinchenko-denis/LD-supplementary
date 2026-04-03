@@ -18,7 +18,7 @@ def section(title):
     print(f"  {title}")
     print(f"{'='*65}")
 
-section("0. CONSTANTS (CODATA 2018)")
+section("0. CONSTANTS (CODATA 2022)")
 
 d1, d2 = 2, 3
 N = d1 * d2
@@ -31,7 +31,7 @@ L = N + 1
 m_e = RealField(200)(0.51099895)
 mu_exp = RealField(200)(1836.15267343)
 g_exp = mu_exp**(QQ(1)/4)
-alpha_inv = RealField(200)(137.035999084)
+alpha_inv = RealField(200)(137.035999177)  # CODATA 2022 (±0.000000021)
 alpha = 1 / alpha_inv
 
 print(f"  N = {N}, d1 = {d1}, d2 = {d2}")
@@ -194,9 +194,9 @@ pull_A = (A_exp - A_LD) / A_err
 check("A pull = +0.63 sigma", abs(pull_A - 0.63) < 0.02)
 
 gamma_LD = float(arctan(QQ(d2**2)/d1**2) * 180 / pi)
-gamma_exp, gamma_err = 65.98, 4.0
+gamma_exp, gamma_err = 62.8, 2.6  # LHCb 2025
 pull_gamma = (gamma_exp - gamma_LD) / gamma_err
-check("gamma pull = -0.015 sigma", abs(pull_gamma) < 0.02)
+check("gamma pull = -1.25 sigma", abs(pull_gamma - (-1.25)) < 0.05)
 
 Rb2_LD = float(QQ(N) / kirchhoff_int)
 Rb2_exp, Rb2_err = 0.15088, 0.007
@@ -265,7 +265,7 @@ section("8. ALPHA FORMULA (eq. 6)")
 BULK = float(index * prod_w) / float(pi) * float(cos(1/(N*pi)))**2
 j_i = 1728
 dim_M10 = ModularForms(Gamma0(6), 10).dimension()
-IR = float(pi) / prod_w * (1 - 1.0/j_i + float(dim_M10)/j_i**2)
+IR = float(pi) / prod_w * (j_i + N) / (j_i + L)  # Form A: (j+N)/(j+L) = 1734/1735
 alpha_inv_pred = BULK - IR
 
 print(f"  BULK = {BULK:.4f}")
@@ -277,8 +277,16 @@ print(f"  delta = {abs(alpha_inv_pred - float(alpha_inv))/float(alpha_inv)*1e9:.
 check("dim M_10 = 11", dim_M10 == 11)
 check("j(i) = 1728 = (2N)^3", j_i == (2*N)**3)
 check("432 = index * prod(w)", index * prod_w == 432)
-check("alpha residual < 0.01 ppb",
-      abs(alpha_inv_pred - float(alpha_inv)) / float(alpha_inv) * 1e9 < 0.01)
+alpha_inv_CODATA_err = 0.000000021  # CODATA 2022 uncertainty
+alpha_pull_CODATA = (float(alpha_inv) - alpha_inv_pred) / alpha_inv_CODATA_err
+alpha_inv_Rb = 137.035999206  # Rb 2023 (±0.000000011)
+alpha_inv_Rb_err = 0.000000011
+alpha_pull_Rb = (alpha_inv_Rb - alpha_inv_pred) / alpha_inv_Rb_err
+
+print(f"  pull vs CODATA = {alpha_pull_CODATA:.1f} sigma")
+print(f"  pull vs Rb     = {alpha_pull_Rb:.1f} sigma")
+check("alpha Form A: pull vs CODATA < 2 sigma", abs(alpha_pull_CODATA) < 2)
+check("alpha Form A: pull vs Rb < 1 sigma", abs(alpha_pull_Rb) < 1)
 
 section("9. DELTA-K FORMULA (eq. 7, Table 2)")
 
@@ -691,7 +699,7 @@ print(f"          cusps={list(divisors(N_b))}, prod(w)={prod_w_b}, L={L_b}")
 
 dim_M10_b = ModularForms(Gamma0(N_b), 10).dimension()
 BULK_b = float(index_b * prod_w_b / pi * cos(1/(N_b*pi))**2)
-IR_b = float(pi / prod_w_b * (1 - 1.0/1728 + dim_M10_b/1728**2))
+IR_b = float(pi / prod_w_b * (1728 + N_b) / (1728 + L_b))  # Form A: (j+N)/(j+L)
 alpha_inv_b = BULK_b - IR_b
 alpha_b = 1.0 / alpha_inv_b
 
