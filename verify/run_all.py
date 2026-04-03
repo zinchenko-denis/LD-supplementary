@@ -15,12 +15,11 @@ TIERS = [
     ('t0_foundation',      'Foundation: N=6, B₁ (A.1, B.1–B.5)'),
     ('t1_monodromy',       'Monodromy O.1'),
     ('t2_quantum_numbers', 'Quantum numbers (F.3–F.7)'),
+    ('t3_spectrum',        'Spectrum D.2–D.8, I.6'),
+    ('t4_ckm',            'CKM E.8, V.1–V.4'),
     ('t5_pmns',            'PMNS angles (X.100–X.129)'),
-    # ── stubs (to be implemented) ──
-    # ('t3_spectrum',      'Spectrum D.2–D.8'),
-    # ('t4_ckm',           'CKM E.8, V.1–V.4'),
-    # ('t6_mass_formula',  'Mass formula G.0–G.8'),
-    # ('t7_alpha_mu_G',    'α, μ, G — H.1–H.3'),
+    ('t6_mass_formula',    'Mass formula G.0–G.8'),
+    ('t7_alpha_mu_G',      'α, μ, G (H.1–H.3)'),
     # ('t8_gap3_closure',  'Gap 3 closure X.97'),
     # ('t9_information',   'Information geometry C.8'),
 ]
