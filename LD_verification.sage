@@ -438,6 +438,23 @@ print(f"  Dm^2_31 = {dm31_eV2:.3e} eV^2 (NuFIT: 2.513e-3)")
 sin2_12 = QQ(d1**2) / (d1**2 + d2**2)
 check("sin^2 theta_12 = 4/13", sin2_12 == QQ(4)/13)
 
+sin2_23 = QQ(d2**4) / (d1**6 + d2**4)
+check("sin^2 theta_23 = 81/145", sin2_23 == QQ(81)/145)
+
+sin2_13 = QQ(d1) / (L * (d2**2 + d2 + 1))
+check("sin^2 theta_13 = 2/91", sin2_13 == QQ(2)/91)
+
+# Pulls vs NuFIT 6.0 IC19 NO
+sin2_12_exp, sin2_12_sig = 0.307, 0.012
+sin2_23_exp, sin2_23_sig = 0.561, 0.015
+sin2_13_exp, sin2_13_sig = 0.02195, 0.00054
+
+pull_12 = (sin2_12_exp - float(sin2_12)) / sin2_12_sig
+pull_23 = (sin2_23_exp - float(sin2_23)) / sin2_23_sig
+pull_13 = (sin2_13_exp - float(sin2_13)) / sin2_13_sig
+print(f"  PMNS pulls (NuFIT 6.0): θ12={pull_12:+.2f}σ, θ23={pull_23:+.2f}σ, θ13={pull_13:+.2f}σ")
+check("PMNS Sigma|pull| < 1.0", abs(pull_12) + abs(pull_23) + abs(pull_13) < 1.0)
+
 juno_val, juno_err = 0.3092, 0.0087
 pull_juno = (juno_val - float(sin2_12)) / juno_err
 print(f"  JUNO pull: {pull_juno:+.2f} sigma")
@@ -719,7 +736,7 @@ def dK_b(n_val, ell_val):
     return alpha_b / (2*float(pi)) * (Phi_b(n_val) - L_b * ell_val)
 
 blind_particles = [
-    ("e",   0, 1.0,            0),
+    ("e",   0, 1.0,            7),
     ("u",   1, 2.0/3,          3),
     ("d",   1, float(sqrt(2)), 3),
     ("s",   3, 2.0/3,          3),
@@ -776,7 +793,7 @@ print(f"  Max deviation: {max_blind:.1f}% (tau)")
 print(f"  All within 6%: {all_within_6}")
 print(f"  Within 3%: {within_3}/10")
 print(f"  Within 1%: {sum(1 for d in blind_deltas if d < 1)}/10")
-print(f"  No experimental mass data used in computation chain.")
+print(f"  Only m_e used as mass input; no fitted parameters.")
 
 check("Blind: all 10 predictions within 6%", all_within_6)
 check("Blind: RMS < 4%", rms_blind < 4)
