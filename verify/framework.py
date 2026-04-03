@@ -65,7 +65,7 @@ SIGMA0 = {
 
 PARTICLE_DATA = {
     #       n   ℓ   K            face  Fσ₁
-    'e':   (0,  7,  1,           3,    3),
+    'e':   (0,  7,  1,           3,    6),     # σ₁(e)=d, face(d)=6
     'u':   (1,  3,  Fraction(2,3), 6,  6),
     'd':   (1,  3,  None,        6,    3),     # K = √2 (EWSB)
     'mu':  (3,  7,  Fraction(3,4), 3,  6),

@@ -20,8 +20,8 @@ TIERS = [
     ('t5_pmns',            'PMNS angles (X.100–X.129)'),
     ('t6_mass_formula',    'Mass formula G.0–G.8'),
     ('t7_alpha_mu_G',      'α, μ, G (H.1–H.3)'),
-    # ('t8_gap3_closure',  'Gap 3 closure X.97'),
-    # ('t9_information',   'Information geometry C.8'),
+    ('t8_gap3_closure',   'Gap 3 closure X.97'),
+    ('t9_information',    'Information geometry C.8, K.9'),
 ]
 
 def main():
