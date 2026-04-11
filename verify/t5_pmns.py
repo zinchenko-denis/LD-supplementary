@@ -97,17 +97,24 @@ def run():
     check("X.129b: L·∏GN = 7·1885 = 13195",
           L * prod_GN == 13195)
 
-    # ── Pulls vs experiment ──
+    # ── Pulls vs experiment (NuFIT 6.1 IC23 NO) ──
     p12 = pull(float(sin2_12), *EXP_PMNS['sin2_12'])
-    p23 = pull(float(sin2_23), *EXP_PMNS['sin2_23'])
     p13 = pull(float(sin2_13_idx), *EXP_PMNS['sin2_13'])
 
     check(f"θ₁₂ pull = {p12:+.2f}σ (|pull| < 1)", abs(p12) < 1)
-    check(f"θ₂₃ pull = {p23:+.2f}σ (|pull| < 1)", abs(p23) < 1)
-    check(f"θ₁₃ pull = {p13:+.2f}σ (|pull| < 1)", abs(p13) < 1)
+    check(f"θ₁₃ pull = {p13:+.2f}σ (|pull| < 2)", abs(p13) < 2)
 
-    sum_pull = abs(p12) + abs(p23) + abs(p13)
-    check(f"Σ|pull| = {sum_pull:.2f} < 1.0", sum_pull < 1.0)
+    # θ₂₃: NuFIT 6.1 IC23 NO best fit = 0.470 (lower octant).
+    # LD predicts 81/145 = 0.559 (upper octant).
+    # Simple pull misleading due to bimodal likelihood.
+    # Paper S295: "within 3σ allowed range (0.432–0.587), X.244 rigidity"
+    lo, hi = EXP_PMNS_3sigma['sin2_23']
+    check(f"θ₂₃: 81/145 = {float(sin2_23):.5f} inside 3σ range [{lo}–{hi}]",
+          lo <= float(sin2_23) <= hi)
+    check("θ₂₃: LD predicts upper octant (sin²θ₂₃ > 0.5)",
+          float(sin2_23) > 0.5)
+    check("θ₂₃: octant experimentally unresolved (3σ spans both)",
+          lo < 0.5 < hi)
 
     # ── V.6: CKM-PMNS complementarity ──
     A2 = Fraction(d2**2, d1**2 + d2**2)

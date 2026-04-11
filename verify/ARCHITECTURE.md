@@ -92,11 +92,51 @@ LD-supplementary/
 │   │                              # X.57: tensor factorization T = T₂⊗T₃
 │   │                              # X.48: face Markov chain eigenvalues μ(d)/d
 │   │
-│   └── t9_information.py          # C.8.1: Shannon H = log₂(12)
-│                                  # C.8.2: equicorrelation 192 = d₁⁶d₂
-│                                  # C.8.3: Σf²h = 44
-│                                  # V.10: dessin as [12,3,2] code
-│                                  # K.9: Moonshine T_{6E} = t₆ + 5
+│   ├── t9_information.py          # C.8.1: Shannon H = log₂(12)
+│   │                              # C.8.2: equicorrelation 192 = d₁⁶d₂
+│   │                              # C.8.3: Σf²h = 44
+│   │                              # V.10: dessin as [12,3,2] code
+│   │                              # K.9: Moonshine T_{6E} = t₆ + 5
+│   │
+│   ├── t10_weinberg.py            # X.219: sin²θ_W = 3/13 = d₂/det_M
+│   │                              # Tower C₂ = 13/12, gen ratio 1/d₁²
+│   │                              # Unified det_M = 13 denominator
+│   │                              # NLO correction (N-1)/d₂ = 5/3
+│   │                              # Pull vs PDG 2024
+│   │
+│   ├── t11_cp_phase.py            # X.218: |sinδ| = 1 (cross-term irrationality)
+│   │                              # X.224: sinδ = -1 (canonical ℍ orientation)
+│   │                              # J² = 2⁹·3⁶·89²/(5²·7³·13⁵·29²)
+│   │                              # Full |U|² matrix (9 rational entries)
+│   │                              # 4-gear structure {5, 7, 13, 29}
+│   │
+│   ├── t12_cr_master.py           # X.225: Resultant degree 42 = N·L
+│   │                              # X.226: GCD(R₁₃, R₂₃) = 1
+│   │                              # CR = master equation, M = scaffolding
+│   │                              # Cross-ratio arithmetic verification
+│   │                              # Channel rule X.130 (forced assignment)
+│   │
+│   └── t13_tower.py               # X.183: f₁ = 1/55 = 1/((N-1)·dim_M₁₀)
+│                                  # X.188/X.200/X.205: Tower levels n=0,1,2,3
+│                                  # X.202: Fricke ★★★
+│                                  # X.228: N=6 = max{genus 0 ∩ φ(N)≤2}
+│
+│   ├── t14_directed.py            # X.256: A_dir = σ₁+σ₀, χ = x²(x+1)(x−2)·q₃·q₅
+│   │                              # X.263: Golden bridge q₅ = q_φ·q₃ − d₂
+│   │                              # X.259: Old/new decomposition, 15 genus-0 levels
+│   │                              # Discriminants: −59, 46901 (both prime)
+│   │
+│   ├── t15_golden_bridge.py       # X.267: Ω₃ = σ₁−σ₀ → eigenvalues {0,−φ,1/φ}
+│   │                              # X.272: Tr(Ω₃^k) = (−1)^k L_k (Lucas)
+│   │                              # X.268: [A₃,Ω₃] maximally nilpotent
+│   │                              # X.275: N=6 unique (golden uniqueness)
+│   │
+│   └── t16_crt_unification.py     # X.280: L = 3I − A_dir − σ₀⁻¹ on V₆^{ex}
+│                                  # X.281: C eigenvalues = {3, 6/5, 8/11}
+│                                  # det(C) = 144/55 = index²/f₁⁻¹
+│                                  # Tower corrections: 7/4, 169/150
+│                                  # X.187: Fermat filtration (W₂=+1 → HALT)
+│                                  # JUNO confirmation (+0.17σ)
 │
 ├── README.md                      # (update with verification instructions)
 └── requirements.txt               # numpy, sympy
@@ -222,21 +262,28 @@ if __name__ == "__main__":
     summary()
 ```
 
-## Ожидаемые метрики
+## Метрики (v1728)
 
-| Tier | Секция companion | Checks | Новые vs existing |
-|------|-----------------|--------|-------------------|
-| t0 | A.1, B.1-B.5 | ~15 | update |
-| t1 | O.1 | ~20 | update |
-| t2 | F.3-F.7 | ~25 | mostly new (DFT) |
-| t3 | I.6, D.2-D.8 | ~30 | new (bridge) |
-| t4 | E.8, V.1-V.8 | ~20 | update |
-| t5 | X.100-X.129 | ~15 | **all new** |
-| t6 | G.0-G.8 | ~25 | new (NLO) |
-| t7 | H.1-H.3 | ~15 | update |
-| t8 | X.97, W.4, X.48 | ~15 | **all new** |
-| t9 | C.8, K.9, V.10 | ~10 | **all new** |
-| **Total** | | **~190** | ~100 new |
+| Tier | Секция companion | Checks | Статус |
+|------|-----------------|--------|--------|
+| t0 | A.1, B.1-B.5 | 35 | v8 (unchanged) |
+| t1 | O.1 | 17 | v8 (unchanged) |
+| t2 | F.3-F.7 | 58 | v8 (unchanged) |
+| t3 | I.6, D.2-D.8 | 34 | v8 (unchanged) |
+| t4 | E.8, V.1-V.6 | 26 | v8 (unchanged) |
+| t5 | X.100-X.129 | 29 | v8 (unchanged) |
+| t6 | G.0-G.8 | 22 | v8 (unchanged) |
+| t7 | H.1-H.3 | 15 | v8 (unchanged) |
+| t8 | X.97, W.4, X.48 | 31 | v8 (unchanged) |
+| t9 | C.8, K.9, V.10 | 23 | v8 (unchanged) |
+| t10 | X.219 | 15 | **NEW v1728** |
+| t11 | X.218, X.224 | 25 | **NEW v1728** |
+| t12 | X.225, X.226 | 15 | **NEW v1728** |
+| t13 | X.183, X.202, X.228 | 28 | **NEW v1728** |
+| t14 | X.256, X.263 | 34 | **NEW S300** |
+| t15 | X.267, X.272, X.275 | 39 | **NEW S300** |
+| t16 | X.280, X.281 | 58 | **NEW S300** |
+| **Total** | | **508** | 290 v8 + 87 v1728 + 131 S300 |
 
 ## Запуск
 

@@ -22,13 +22,20 @@ TIERS = [
     ('t7_alpha_mu_G',      'α, μ, G (H.1–H.3)'),
     ('t8_gap3_closure',   'Gap 3 closure X.97'),
     ('t9_information',    'Information geometry C.8, K.9'),
+    ('t10_weinberg',      'Weinberg angle X.219'),
+    ('t11_cp_phase',      'CP phase, |U|², Jarlskog X.218/X.224'),
+    ('t12_cr_master',     'CR = master equation X.225/X.226'),
+    ('t13_tower',         'Tower structure X.183/X.202/X.228'),
+    ('t14_directed',      'Directed operators X.256/X.263'),
+    ('t15_golden_bridge', 'Golden bridge + Lucas X.267/X.272'),
+    ('t16_crt_unification', 'CRT grand unification X.280/X.281'),
 ]
 
 def main():
     print("=" * 65)
     print("  LD VERIFICATION SUITE")
-    print(f"  Companion: post-S217 (2026-04-02)")
-    print(f"  Paper: v8, DOI 10.5281/zenodo.19393365")
+    print(f"  Companion: S295+, 17 tiers (t0–t16)")
+    print(f"  Paper: v1728_draft_S295, DOI 10.5281/zenodo.19520240")
     print("=" * 65)
 
     # Filter tiers if args given

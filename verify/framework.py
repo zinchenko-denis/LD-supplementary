@@ -26,6 +26,19 @@ Phi3_d1 = d1**2 + d1 + 1       # 7 = L
 Phi3_d2 = d2**2 + d2 + 1       # 13 = det M_lep
 det_M_lep = Phi3_d2            # 13
 
+# Tower coefficients (X.183/X.188)
+# C_n = NLO coefficient at tower level n
+# C_1 = 10/9 = |B₁|/(|B₁|-1), C_2 = 13/12 = det_M/index
+C_tower = {
+    0: Fraction(1, 1),             # C_0 = 1 (LO)
+    1: Fraction(10, 9),            # C_1 = |B₁|/(|B₁|-1)
+    2: Fraction(13, 12),           # C_2 = det_M/index
+    3: Fraction(17, 15),           # C_3 = HALT level
+}
+
+# Alien primes (X.174 Catalan staircase)
+alien_89 = L * det_M_lep - d1     # 91 - 2 = 89
+
 # ═══════════════════════════════════════════════════════════════
 #  MONODROMY — Single Source of Truth (O.1)
 # ═══════════════════════════════════════════════════════════════
@@ -93,11 +106,27 @@ g_base = mu_ratio ** 0.25
 alpha_inv_CODATA = 137.035999177   # ± 0.000000021
 alpha_inv_Rb = 137.035999206       # ± 0.000000011
 
-# NuFIT 6.0 IC19 NO
+# NuFIT 6.1 IC23 NO (includes JUNO; supersedes 6.0 IC19)
 EXP_PMNS = {
-    'sin2_12': (0.307, 0.012),
-    'sin2_23': (0.561, 0.015),
-    'sin2_13': (0.02195, 0.00054),
+    'sin2_12': (0.310, 0.0067),      # σ shrunk by JUNO (was 0.012)
+    'sin2_23': (0.470, 0.016),        # IC23 NO best fit (LOWER octant)
+    'sin2_13': (0.02246, 0.00049),    # IC23 NO
+    'delta':   (197.0, 33.5),         # degrees, +42/-25 symmetrised
+}
+
+# NuFIT 6.1 IC23 NO — 3σ allowed ranges for tension analysis
+EXP_PMNS_3sigma = {
+    'sin2_23': (0.432, 0.587),        # 3σ range, θ₂₃ octant unresolved
+}
+
+# JUNO 2025 (arXiv:2511.14593) — standalone reactor measurement
+EXP_JUNO = {
+    'sin2_12': (0.3092, 0.0087),
+}
+
+# Electroweak (PDG 2024)
+EXP_EW = {
+    'sin2_thetaW_MSbar': (0.23122, 0.00004),
 }
 
 # PDG 2024 + LHCb 2025
