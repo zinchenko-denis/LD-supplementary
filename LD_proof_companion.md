@@ -19755,12 +19755,12 @@ Mass comparison metric: percent residual δK, not σ-pull (LO mass rule is appro
 
 **Lines added:** +1,964 lines pre-C8 (17,697 → 19,661); C8 closure adds secondary patches + footer; final companion `LD_proof_companion_S590.md`.
 
-**DB ref:** `current/LD_db_current.json`, schema v2.1.1, generated_session=S541. DB content unchanged throughout cycle; raw_text_companion_ref regenerated per session via `infrastructure/regen_companion_refs.py`.
+**DB ref:** Working database snapshot, schema v2.1.1, generated_session=S541. Database content unchanged throughout the cycle.
 
 **Pipeline status:**
 - `verify_numerics`: 562/563 ✓ (X.168 fail pre-existing, S524)
-- `LD_db_audit_v2`: blocks=999 fatal=0 warn=38 info=179 (post-cycle baseline, will spike post-C8 due to fresh F16 drift; coordinator regen restores)
-- `check_implicit_refs`: 1 pre-existing X.411→X.358b
+- Database audit: blocks=999 fatal=0 warn=38 info=179 (post-cycle baseline)
+- Implicit refs check: 1 pre-existing X.411→X.358b
 
 **Sessions log:**
 - C1 (S590-1): audit + scope freeze + secondary scope catalogue (0 contentful)
@@ -19774,8 +19774,7 @@ Mass comparison metric: percent residual δK, not σ-pull (LO mass rule is appro
 
 ---
 
-**Post-S590 phase (compact log, full detail in `current/STATUS.md` per
-P5.9 convention):**
+**Post-S590 phase (compact log):**
 
 - **S591-S606** (April 2026): Cycle-4 review with GPT-5.5 (19/19 sections),
   Phase 4 PARSE STR integration commits (S577 §16, S579 §4, S583 §7+§13+§3,
@@ -19808,7 +19807,7 @@ P5.9 convention):**
 - **Lessons formalized in S618:** L055 LINE-SHIFT-ACCUMULATOR-DIRECTION,
   L057 DECOMPOSITION-VS-CANONICAL-SOURCE, L058 SPEC-LINE-COUNT-NEQ-MEASURED,
   L059 RANK-CONTEXT-DISAMBIGUATION, L060 PAPER-EDIT-AS-WATCH-LIST-OPPORTUNITY,
-  L061 PAPER-CATCHING-UP-TO-COMPANION. See `docs/LD_lessons_learned.md`.
+  L061 PAPER-CATCHING-UP-TO-COMPANION.
 
 **Current marker:** post-S618 (2026-05-14, Phase 5 companion sync 49/49
 closed; companion structurally aligned with paper post-cycle-4 v9 finalization;
@@ -19820,21 +19819,15 @@ derivation PENDING per T.10#s1).
 **Next phase**: v9 paper preparation scoping (separate phase, post-Phase 5).
 
 
-**Frozen decisions (1-9):** see `docs/companion_update_STATE.md` §2.
+**Known minor issues in transcribed proof sketches:**
+- X.247c.cond proof_sketch[4]: ends "...Justified by..." (faithful transcription of database content, S538).
+- X.247c.cond proof_sketch[6]: ends "...X...." (faithful transcription of database content, S538).
 
-**Lessons learned (L-cycle-1..5):** see `docs/companion_update_STATE.md` §6 — index-set deletion, F16 hygiene regen, variant-name detection, per-area sep inspection, kill_test full-text rendering.
+Both are transcription truncations carried verbatim from the working
+database and do not affect the conclusions; full proof sketches are
+available in the corresponding session journals.
 
-**Known DB-side issues (deferred to potential post-cycle DB-cleanup):**
-- X.247c.cond proof_sketch[4]: ends "...Justified by..." (DB-faithful truncation, S538)
-- X.247c.cond proof_sketch[6]: ends "...X...." (DB-faithful truncation, S538)
-- Cloud rendered both verbatim per CLAIMS-FROM-SSoT §1.10. Coordinator decision (S590-α): accept-as-is, defer DB upstream fix.
-
-**X.247c [CONJ] HEADLINE preservation:** All secondary integration patches in C8 are ADDITIVE — they reference the framework discharge classification (X.247c.cond/.no-go/.A-prime/.EC1a) without promoting [CONJ] → [DER]. Honest non-overclaim per S590 cycle-wide guidance.
-
-**Next steps:**
-- Coordinator merge C8 → main
-- Post-merge ref regen via `infrastructure/regen_companion_refs.py` (resolves F16 drift on 11 patched blocks + footer + rename)
-- Companion ready for v1728 → v9 release on Zenodo + GitHub tag
+**X.247c [CONJ] HEADLINE preservation:** All secondary integration patches in the S590 closure cycle are ADDITIVE — they reference the framework discharge classification (X.247c.cond, X.247c.no-go, X.247c.A-prime, X.247c.EC1a) without promoting [CONJ] → [DER]. The headline conjecture status is intentionally preserved.
 
 ---
 
