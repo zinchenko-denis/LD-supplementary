@@ -6,6 +6,33 @@ kept in `CHANGELOG_v1728.md` for reference.
 
 ---
 
+## [v9 published] — 2026-05-17 (S635)
+
+**Status.** Paper v9 deposited on Zenodo with assigned DOI
+[10.5281/zenodo.20257066](https://doi.org/10.5281/zenodo.20257066).
+
+### Changes
+
+- DOI placeholders substituted with the assigned v9 DOI:
+  - `LD_proof_companion.md` header (L7).
+  - `README.md` (paper-v9 line + BibTeX citation block).
+  - `CHANGELOG.md` (this entry).
+- Repository visibility switched from private to public.
+- Companion content unchanged from the v9 snapshot (S631);
+  body checksum preserved.
+
+### Companion ↔ paper correspondence
+
+- Paper PDF: `LD_v9_FINAL.pdf`, 1.28 MB, 121 pp.
+- File MD5: `2fdc4b14b97828310713eda94faa1c8e`.
+- Architecture-lock baselines preserved exactly relative to the
+  S634 three-way audit close: α⁻¹ = 137.035999202, μ = 6π⁵,
+  R = 33.48, sin²θ_W = 3/13, sin²θ₁₂ = 4/13, sin²θ₁₃ = 2/91,
+  sin²θ₂₃ ∈ {81/145, 64/145}, γ_CKM = 66.04°, δ_CP = 270°,
+  m_e = 0.51099895 MeV.
+
+---
+
 ## [v9 snapshot] — 2026-05-16 (S631)
 
 **Status.** Snapshot prepared on a feature branch ahead of the v9

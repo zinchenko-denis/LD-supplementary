@@ -7,7 +7,8 @@ Denis D. Zinchenko
 
 - Paper v1728 (published 12 April 2026):
   [DOI 10.5281/zenodo.19520240](https://doi.org/10.5281/zenodo.19520240)
-- Paper v9 (current snapshot): DOI to be assigned on Zenodo deposit.
+- Paper v9 (published 17 May 2026):
+  [DOI 10.5281/zenodo.20257066](https://doi.org/10.5281/zenodo.20257066)
 
 > **Snapshot note.** This repository carries the public companion
 > snapshot synchronised to the most recent paper release. Live work
@@ -141,7 +142,9 @@ MIT (code and notebooks); CC BY 4.0 (companion text).
   author    = {Zinchenko, Denis D.},
   title     = {1728: The Standard Model from $X_0(6)$},
   year      = {2026},
-  doi       = {10.5281/zenodo.19520240},
+  version   = {v9},
+  doi       = {10.5281/zenodo.20257066},
+  url       = {https://doi.org/10.5281/zenodo.20257066},
   publisher = {Zenodo}
 }
 ```
