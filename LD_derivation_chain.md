@@ -161,8 +161,8 @@ All 18 outputs verified by:
 - `verify/` suite: 508/508 checks from monodromy to observables
 - `LD_verification.sage`: 91/91 independent Sage checks
 - Dual-compute: Fraction arithmetic + numpy cross-validation
-- GPT 5.3 triple audit (S270): mathematician PASS
+- GPT triple audit during v1728 preparation: mathematician PASS
 
 ---
 
-*Version: S300. Companion: S291. Paper: v1728. 0 continuous free parameters. 0 circular dependencies.*
+*Version: v9 release (May 2026), updated 17 May 2026. Companion: v9 snapshot. Paper: v9 (DOI 10.5281/zenodo.20257066). 0 continuous free parameters. 0 circular dependencies.*
