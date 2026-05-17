@@ -5,10 +5,10 @@ Computational verification, proof companion, and supplementary materials for:
 **"1728: The Standard Model from $X_0(6)$"**
 Denis D. Zinchenko
 
-- Paper v1728 (published 12 April 2026):
-  [DOI 10.5281/zenodo.19520240](https://doi.org/10.5281/zenodo.19520240)
-- Paper v9 (published 17 May 2026):
+- Paper v9 (current, published 17 May 2026):
   [DOI 10.5281/zenodo.20257066](https://doi.org/10.5281/zenodo.20257066)
+- Paper v1728 (previous, published 12 April 2026):
+  [DOI 10.5281/zenodo.19520240](https://doi.org/10.5281/zenodo.19520240)
 
 > **Snapshot note.** This repository carries the public companion
 > snapshot synchronised to the most recent paper release. Live work
@@ -50,7 +50,7 @@ Z (Corrections).
 
 ---
 
-## Verification Suite (Python, v1728-era)
+## Verification Suite (Python, v1728 baseline carried into v9)
 
 `verify/` — 508 independent checks across 17 tiers, using exact
 arithmetic (no SageMath dependency).
@@ -67,12 +67,15 @@ python run_all.py t10 t11  # Weinberg angle + CP phase
 
 **Requirements:** Python 3.10+, NumPy, SymPy.
 
-**Scope.** The current verify suite was prepared for paper v1728
-(published April 2026). It covers every numerical claim of v1728
-across the tier table below. Tiers covering new v9 material will
-be added with the v9 verification update; until then, this suite
-is the authoritative cross-check of all v1728 numerical results
-that are carried unchanged into v9.
+**Scope.** The verify suite was prepared for paper v1728 (April
+2026) and adopted as-is by paper v9 (May 2026) for the shared
+v1728 numerical baseline: the architecture-lock values and test
+bodies are unchanged, and the suite is the authoritative
+cross-check for that shared numerical content (508/508 pass on
+current main). Tiers covering the v9-only benchmark additions
+(LHCb-CONF-2025-003 γ benchmark, NuFIT 6.1 IC23 NO, JUNO 2025)
+will be added with a future verification update; those additions
+do not affect any architecture-lock baseline.
 
 **Tiers:**
 
@@ -102,7 +105,7 @@ that are carried unchanged into v9.
 ## Verification Notebook (SageMath, legacy)
 
 `LD_verification.sage` — 90 independent checks
-(SageMath implementation, paper v8 baseline). Kept for reference.
+(SageMath implementation, v1728 baseline carried into v9). Kept for reference.
 
 ```bash
 sage LD_verification.sage
@@ -113,7 +116,8 @@ sage LD_verification.sage
 ## Reviewer FAQ
 
 `LD_reviewer_FAQ.md` — answers to common reviewer questions
-(23 entries, v1728-era; carried into v9 unchanged where applicable).
+(33 entries; revised at v9 release after a three-way adversarial
+audit against paper v9; see CHANGELOG entry for S635c).
 
 ---
 
@@ -127,7 +131,7 @@ DAG: from N=6 uniqueness through mass formula, α, μ, CKM, and PMNS.
 ## Interactive Dashboard
 
 See [zinchenko-denis.github.io/LD-explorer](https://zinchenko-denis.github.io/LD-explorer/)
-for the interactive parameter explorer (v1728-era; v9 update planned).
+for the interactive parameter explorer (synchronised to paper v9).
 
 ---
 

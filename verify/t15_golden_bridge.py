@@ -10,7 +10,9 @@ From Ω₃ flows the entire golden bridge:
   X.272: Tr(Ω₃^k|_{ex}) = (−1)^k L_k — one operator generates everything
   X.275: N=6 unique semiprime for golden bridge
 
-Companion: DIR.3–DIR.6 (S289–S291). Paper v1728.
+Companion: DIR.3–DIR.6 (X.263, X.267, X.272, X.275).
+Golden-bridge material is companion-only and not on the v9 paper's Tier-A
+derivation path; X.263 and X.267 have zero occurrences in the v9 paper PDF.
 """
 
 import sys, os

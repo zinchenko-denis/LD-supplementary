@@ -13,7 +13,8 @@ Key results:
   Tower-cusp correspondence (X.185)
   Fermat filtration: W₂=+1 → 3 sectors + HALT
 
-Companion: X.183–X.205, X.228. Paper v1728: §XVI (Tower Structure).
+Companion: X.183–X.205, X.228.
+Paper v9: §6 (NLO, Tower, and Response). Paper v1728: §XVI.
 """
 
 from framework import *

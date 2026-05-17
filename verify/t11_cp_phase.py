@@ -5,7 +5,7 @@ X.224 [DER, 1 ident.]: sinδ = -1 from canonical ℍ orientation.
 Full |U|² matrix: 9 rational entries, unconditional at cosδ = 0.
 J² = 2⁹·3⁶·89²/(5²·7³·13⁵·29²).
 
-Companion: X.176, X.218, X.224. Paper v1728: §XIII (CP Violation).
+Companion: X.176, X.218, X.224. Paper v9 / v1728: §13 (CP Violation).
 """
 
 from framework import *

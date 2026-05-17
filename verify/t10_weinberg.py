@@ -6,7 +6,7 @@ Derivation:
   sin²θ_W = (1/d₁²)/C₂ = (1/4)/(13/12) = 3/13.
 
 Companion: X.192 (scan), X.219 (derivation).
-Paper v1728: §XIV (Electroweak Mixing), Theorem (Weinberg angle).
+Paper v9 / v1728: §14 (Electroweak Mixing), Theorem 14.1 (Weinberg angle).
 """
 
 from framework import *
