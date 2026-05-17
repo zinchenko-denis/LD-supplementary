@@ -10,7 +10,8 @@ Note: Full symbolic verification of X.225/X.226 requires ~150s of sympy
     polynomial itself (which requires the full M60 Universal Sylvester
     framework from Colab).
 
-Companion: X.225, X.226. Paper v1728: §XII (PMNS — Cross-Ratio).
+Companion: X.225, X.226.
+Paper v9: §12.5 (Gap 9 reframing: CR = master, M = scaffolding). Paper v1728: §XII.
 """
 
 from framework import *

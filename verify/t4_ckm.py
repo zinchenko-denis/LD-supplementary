@@ -123,7 +123,7 @@ def run():
     check(f"E.6: R_b pull = {p_Rb:+.2f}σ (|pull| < 1)", abs(p_Rb) < 1)
     check(f"E.6: J pull = {p_J:+.2f}σ (|pull| < 1)", abs(p_J) < 1)
 
-    # χ²/dof — R_b² excluded per S295 (R_b² = λ·d₁/d₂ is a constraint, not independent)
+    # χ²/dof — R_b² excluded (R_b² = λ·d₁/d₂ is a constraint, not independent)
     chi2 = p_lam**2 + p_A**2 + p_gam**2
     dof = 3  # λ, A, γ (3 independent params)
     check(f"E.6: χ²/dof = {chi2/dof:.2f} ≈ 0.65 (R_b² excluded)", chi2 / dof < 1.0)

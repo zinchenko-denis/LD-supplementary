@@ -9,7 +9,9 @@ Key results:
   X.259: Old/new factorization χ = ∏ χ_ex(M) for M|N
   X.263a: q₃(2)·q₅(2) = 40 = Kirchhoff
 
-Companion: DIR section (S288–S291). Paper v1728: §XVI.
+Companion: DIR section (X.248–X.281).
+Shared content in paper v9: Schur eigenvalues {3, 6/5, 8/11} at §12.5 / §16.5, referenced there as X.336.
+Paper v1728: §XVI.
 """
 
 import sys, os

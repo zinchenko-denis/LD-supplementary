@@ -9,7 +9,9 @@ The Laplacian on V₆^{ex} decomposes via CRT:
          det(C) = 144/55 = index²/f₁⁻¹
          Tower corrections: L_eff→CR ratios are LD monomials
 
-Companion: DIR.7–DIR.8 (S291). Paper v1728.
+Companion: DIR.7 (X.280, CRT grand unification framing — companion-only;
+0 occurrences in v9 paper PDF); DIR.8 (X.281, Schur complement —
+paper v9 §12.5 / §16.5, 4 occurrences). Paper v1728: §XVI.
 """
 
 import sys, os

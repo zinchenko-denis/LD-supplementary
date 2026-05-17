@@ -34,8 +34,9 @@ TIERS = [
 def main():
     print("=" * 65)
     print("  LD VERIFICATION SUITE")
-    print(f"  Companion: S295+, 17 tiers (t0–t16)")
-    print(f"  Paper: v1728_draft_S295, DOI 10.5281/zenodo.19520240")
+    print(f"  17 tiers (t0–t16), 508/508 checks")
+    print(f"  Paper v9 (current): DOI 10.5281/zenodo.20257066")
+    print(f"  Paper v1728 baseline: DOI 10.5281/zenodo.19520240")
     print("=" * 65)
 
     # Filter tiers if args given
