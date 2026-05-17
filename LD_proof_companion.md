@@ -4,7 +4,7 @@
 companion post-S618 (Phase 5 companion sync, 49/49 atomic edits closed).
 
 **Paper:** "1728: The Standard Model from $X_0(6)$", v9
-(Zenodo DOI: TBD on v9 deposit; previous version v1728 = DOI 10.5281/zenodo.19520240).
+(Zenodo DOI: 10.5281/zenodo.20257066; previous version v1728 = DOI 10.5281/zenodo.19520240).
 
 **Author:** Denis D. Zinchenko.
 
