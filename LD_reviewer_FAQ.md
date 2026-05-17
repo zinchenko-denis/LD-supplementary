@@ -1,11 +1,12 @@
 # LD Framework — Reviewer FAQ
 
 **Companion document to:** D.D. Zinchenko, "1728: The Standard Model from X₀(6)" (2026).
-**Paper:** [DOI 10.5281/zenodo.19520240](https://doi.org/10.5281/zenodo.19520240)
-**Code:** [github.com/zinchenko-denis/LD-supplementary](https://github.com/zinchenko-denis/LD-supplementary) — 508/508 Python checks (17 tiers) + 91/91 Sage
-**Companion:** LD_proof_companion (post-S291, 1244 theorem headers, 117+ dead directions)
+**Paper v9 (current):** [DOI 10.5281/zenodo.20257066](https://doi.org/10.5281/zenodo.20257066)
+**Paper v1728 (April 2026):** [DOI 10.5281/zenodo.19520240](https://doi.org/10.5281/zenodo.19520240)
+**Code:** [github.com/zinchenko-denis/LD-supplementary](https://github.com/zinchenko-denis/LD-supplementary) — 508/508 Python checks (17 tiers) + 91/91 Sage (v1728 baseline carried unchanged into v9)
+**Companion:** LD_proof_companion (v9 snapshot, ~19800 lines, 70+ dead directions)
 
-This document anticipates questions that arise on first reading and provides concise answers with precise references. Questions are ranked by frequency from 15+ independent audits (GPT physics/math/experimentalist reviews, adversarial audits S283–S284, cross-verification S287, paper audit S297).
+This document anticipates questions that arise on first reading and provides concise answers with precise references. Questions are ranked by frequency from 15+ independent audits during paper preparation (physics/math/experimentalist reviews, adversarial audits, cross-verifications, full paper audits, three-way audit prior to the v9 release).
 
 ---
 
@@ -45,7 +46,7 @@ No parameter is adjusted, fitted, or optimised to match data. Every number is ei
 
 18 Tier A: independently derived outputs with distinct derivation chains and no shared free parameters. These are the headline number.
 
-58+ includes downstream quantities (e.g. mass ratios from individual masses), structurally constrained items (e.g. det M_lep = 13 from spectrum), and reformulations (same result from different angles). The independence ledger is in the companion (S267).
+58+ includes downstream quantities (e.g. mass ratios from individual masses), structurally constrained items (e.g. det M_lep = 13 from spectrum), and reformulations (same result from different angles). The independence ledger is in the companion.
 
 ---
 
@@ -160,7 +161,7 @@ Different scope: 3 particles / 1 parameter vs 12 particles / 0 continuous parame
 
 ---
 
-## VII. New in v1728: Directed Operators and CRT (S288–S291)
+## VII. New in v1728: Directed Operators and CRT
 
 ### Q26. What is the golden bridge?
 
@@ -180,7 +181,7 @@ p = 2 (for ker) AND q = 3 (for deg q_φ = q−1). F(A,Ω) = 0 selects N = 6 amon
 
 ### Q29. GPT-physicist gave "reject." Do you agree?
 
-Three independent GPT reviews (S270): physicist (reject on overclaims), mathematician (pass), experimentalist (premature — needs better statistical packaging). All overclaims fixed. Mathematical core passed clean.
+Three independent GPT reviews during v1728 preparation: physicist (reject on overclaims), mathematician (pass), experimentalist (premature — needs better statistical packaging). All overclaims fixed. Mathematical core passed clean. The v9 release additionally underwent a three-way adversarial audit (this assistant + Cloud Code + GPT-5.5) with all Tier 2 findings closed prior to deposit.
 
 ### Q30. 508 verification checks — what do they test?
 
@@ -230,9 +231,9 @@ Every check starts from O.1 monodromy — no precomputed results. Fraction arith
 | 26 | Golden bridge? | q₅ = q_φ·q₃ − d₂ | DIR |
 | 27 | CRT? | L = 3I − A_dir − σ₀⁻¹ | X.280 |
 | 28 | N=6 golden? | F = 0 unique | X.276 |
-| 29 | GPT reject? | Overclaims fixed; math clean | S270 |
+| 29 | GPT reject? | Overclaims fixed; math clean; v9 audit closed | — |
 | 30 | 508 checks? | 17 tiers, O.1 → observables | verify/ |
 
 ---
 
-*Version: S300 (April 2026). Based on paper v1728 and companion S291. 508/508 Python (17 tiers) + 91/91 Sage. 117+ dead directions.*
+*Version: v9 release (May 2026), updated 17 May 2026. Based on paper v9 (DOI 10.5281/zenodo.20257066) and companion v9 snapshot. 508/508 Python (17 tiers) + 91/91 Sage carried unchanged from v1728 baseline. 70+ documented dead directions.*
